@@ -8903,7 +8903,7 @@ save_DIFFRN_SCAN_AXIS
 ;
     _category.id                   diffrn_scan_axis
     _category.mandatory_code       no
-    _category.NX_mapping_details;
+    _category.NX_mapping_details
 
 ;
     _diffrn_scan_axis.axis_id AXISID-->
