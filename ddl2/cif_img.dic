@@ -10,8 +10,35 @@ data_cif_img.dic
 #            Extending the Macromolecular CIF Dictionary (mmCIF)             #
 #                                                                            #
 #                              Version 1.8.8                                 #
-#                              of 2023-11-25                                 #
+#                              of 2024-01-20                                 #
+#    ###################################################################     #
+#    # *** WARNING *** THIS IS A DRAFT FOR DISCUSSION *** WARNING ***  #     #
+#    #                 SUBJECT TO CHANGE WITHOUT NOTICE                #     #
+#    #       SEND COMMENTS TO imgcif-l@iucr.org CITING THE VERSION     #     #
+#    ###################################################################     #
+#                  This draft edited by Herbert J. Bernstein                 #
+#                                                                            #
+#     by Andrew P. Hammersley, Herbert J. Bernstein and John D. Westbrook    #
+#                                                                            #
+# This dictionary was adapted from a format discussed at the imgCIF Workshop #
+# held at BNL Oct 1997 and the Crystallographic Binary File Format Draft     #
+# Proposal by Andrew Hammersley.  The first DDL 2.1 Version was created by   #
+# John Westbrook.  This version is being prepared in support of the 2024     #
+# revisions to ITVG, and was drafted by Herbert J. Bernstein and             #
+# incorporates comments by James Hester, I. David Brown, John Westbrook,     #
+# Brian McMahon, Bob Sweet, Paul Ellis, Harry Powell, Wilfred Li,            #
+# Gotzon Madariaga, Frances C. Bernstein, Chris Nielsen, Nicola Ashcroft,    #
+# Aaron Brewster, James Hester and others and reflects comments in           #
+# Bernstein, H. J., Foerster, A., Bhowmick, A., Brewster, A. S.,             #
+# Brockhauser, S., Gelisio, L., Hall, D. R., Leonarski, F., Mariani, V.,     #
+# Santoni, G., Vonrhein, C. & Winter, G. (2020). "Gold Standard for          #
+# Macromolecular Crystallography Diffraction Data", IUCrJ, 7, 784--792,      #
+# https://doi.org/10.1107/S2052252520008672,                                 #
+# https://doi.org//10.1107/S2052252520008672/ti5018sup1.pdf</a>,             #
+# https://doi.org//10.1107/S2052252520008672/ti5018sup2.pdf</a>              #
 ##############################################################################
+
+
 #    CONTENTS
 #
 #        CATEGORY_GROUP_LIST
@@ -117,6 +144,10 @@ data_cif_img.dic
 #                  _axis.vector[3]
 #                  _axis.variant
 #
+#        category  DIFFRN
+#
+#                  _diffrn.id
+#
 #        category  DIFFRN_DATA_FRAME
 #
 #                  _diffrn_data_frame.array_id
@@ -221,6 +252,12 @@ data_cif_img.dic
 #                  _diffrn_radiation.wavelength_id
 #                  _diffrn_radiation.xray_symbol
 #
+#        category  DIFFRN_RADIATION_WAVELENGTH 
+#
+#                  _diffrn_radiation_wavelength.id
+#                  _diffrn_radiation_wavelength.wavelength
+#                  _diffrn_radiation_wavelength.wt
+#
 #        category  DIFFRN_REFLN
 #
 #                  _diffrn_refln.frame_id
@@ -306,6 +343,12 @@ data_cif_img.dic
 #                  _diffrn_scan_frame_monitor.monitor_value
 #                  _diffrn_scan_frame_monitor.scan_id
 #                  _diffrn_scan_frame_monitor.variant
+#
+#        category  DIFFRN_SOURCE 
+#
+#                  _diffrn_source.diffrn_id 
+#                  _diffrn_source.source 
+#                  _diffrn_source.type 
 #
 #        category  MAP
 #
@@ -479,6 +522,10 @@ data_cif_img.dic
 #DIFFRN_GROUP    |Categories that describe details of the diffraction experiment.                                    |
 #                |---------------------------------------------------------------------------------------------------|
 #                |+-------------------------------------------------------------------------------------------------+|
+#                || DIFFRN                     | Data items in the DIFFRN category record the details about the     ||
+#                ||                            | diffraction data and their measurement. This is a stub category    ||
+#                ||                            | for the cif_img dicionary to complete the tree for tags that are   || #                ||                            | aliases for tags in the various diffrn_... categories in the       || #                ||                            | mmCIF_PDBx dictionary.                                             ||
+#                ||----------------------------+--------------------------------------------------------------------||
 #                || DIFFRN_DATA_FRAME          | Data items in the DIFFRN_DATA_FRAME category record the details    ||
 #                ||                            | about each frame of data.                                          ||
 #                ||                            |                                                                    ||
@@ -598,7 +645,11 @@ data_cif_img.dic
 #                || |   | |   |                           | the value of _diffrn_scan_frame_monitor.id may be   | | ||
 #                || |   | |   |                           | omitted.                                            | | ||
 #                || |   | +-------------------------------------------------------------------------------------+ | ||
-#                || +---------------------------------------------------------------------------------------------+ ||
+#                || +--------------------------+--------------------------------------------------------------------||
+#                || DIFFRN_SOURCE              | Data items in the DIFFRN_SOURCE category describe details of the   ||
+#                ||                            | source of radiation used in the diffraction experiment.            ||
+#                ||                            | This is a stub category for use of DIFFRN_SOURCE which is          ||
+#                ||                            | specified in the mmCIF_PDBx dictionary                             ||
 #                |+-------------------------------------------------------------------------------------------------+|
 #----------------+---------------------------------------------------------------------------------------------------|
 #MAP_GROUP       |Categories that describe maps.                                                                     |
@@ -740,9 +791,7 @@ save_ARRAY_DATA
     _category.id                   array_data
     _category.mandatory_code       no
     _category.NX_mapping_details
-;
-
-    _array_data.array_id ARRAYID
+;    _array_data.array_id ARRAYID
     _array_data.binary_id BINARYID
     _array_data.data  DATAARRAY
     _array_data.header_contents HEADER
@@ -900,8 +949,8 @@ save_ARRAY_DATA
         ;
 ;
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-save_
 
+save_
 
 save__array_data.array_id
     _item_description.description
@@ -916,8 +965,8 @@ save__array_data.array_id
     _item.mandatory_code          implicit
     _item_default.value           1
     _item_type.code               code
-     save_
 
+save_
 
 save__array_data.binary_id
     _item_description.description
@@ -959,8 +1008,8 @@ save__array_data.binary_id
     _item_range.minimum
                             1  1
                             .  1
-     save_
 
+save_
 
 save__array_data.data
     _item_description.description
@@ -1201,6 +1250,7 @@ save__array_data.data
     _item.category_id             array_data
     _item.mandatory_code          yes
     _item_type.code               binary
+
 save_
 
 save__array_data.external_data_id
@@ -1219,7 +1269,8 @@ save__array_data.external_data_id
     _item.mandatory_code          implicit
     _item_default.value           1
     _item_type.code               code
-     save_
+
+save_
 
 save__array_data.header_contents
     _item_description.description
@@ -1236,8 +1287,8 @@ save__array_data.header_contents
     _item.category_id            array_data
     _item.mandatory_code         no
     _item_type.code              text
-     save_
 
+save_
 
 save__array_data.header_convention
     _item_description.description
@@ -1255,8 +1306,8 @@ save__array_data.header_convention
     _item.category_id            array_data
     _item.mandatory_code         no
     _item_type.code              code
-     save_
 
+save_
 
 save__array_data.variant
     _item_description.description
@@ -1274,7 +1325,8 @@ save__array_data.variant
     _item.mandatory_code          implicit
     _item_default.value           .
     _item_type.code               code
-     save_
+
+save_
 
 ############################
 # ARRAY_DATA_EXTERNAL_DATA #
@@ -1291,7 +1343,6 @@ save_ARRAY_DATA_EXTERNAL_DATA
     _category.mandatory_code       no
     _category.NX_mapping_details
 ;
-
     _array_data.array_id ARRAYID
     _array_data.binary_id BINARYID
     _array_data.external_data_id EXTERNAL_DATA_ID
@@ -1332,8 +1383,8 @@ save_ARRAY_DATA_EXTERNAL_DATA
      loop_
     _category_group.id             'inclusive_group'
                                    'array_data_group'
-     save_
 
+save_
 
 save__array_data_external_data.archive_format
     _item_description.description
@@ -1357,8 +1408,8 @@ save__array_data_external_data.archive_format
     TGZ           'A Gzipped tar archive'
     TBZ           'A Bzip2 tar archive'
     .             'No compressed archive is present'
-save_
 
+save_
 
 save__array_data_external_data.archive_path
    _item_description.description
@@ -1374,7 +1425,8 @@ save__array_data_external_data.archive_path
     _item.category_id            array_data_external_data
     _item_type.code              text
 
-    save_
+
+save_
 
 save__array_data_external_data.file_compression
     _item_description.description
@@ -1385,7 +1437,7 @@ save__array_data_external_data.file_compression
 
 ;
 
-    _item.name                 '_array_data_external_data.file_compression''
+    _item.name                 '_array_data_external_data.file_compression'
     _item.category_id            array_data_external_data
     _item.mandatory_code         no
     _item_type.code              code
@@ -1398,8 +1450,8 @@ save__array_data_external_data.file_compression
     BZ2           'File compressed with Bzip2'
     .             'Individual file compression not used'
 
- save_
 
+save_
 
 save__array_data_external_data.frame
     _item_description.description
@@ -1432,8 +1484,8 @@ save__array_data_external_data.frame
     _item_examples.detail
     4                           'The fourth frame in the referenced data array'
 
-    save_
 
+save_
 
 save__array_data_external_data.format
     _item_description.description
@@ -1600,7 +1652,8 @@ save__array_data_external_data.format
 
 ;
 
-    save_
+
+save_
 
 save__array_data_external_data.id
     _item_description.description
@@ -1625,7 +1678,8 @@ save__array_data_external_data.id
     _item_linked.child_name    _item_linked.parent_name
              '_array_data.external_data_id'
                       '_array_data_external_data.id'
-     save_
+
+save_
 
 save__array_data_external_data.path
    _item_description.description
@@ -1652,7 +1706,8 @@ save__array_data_external_data.path
     _item.category_id            array_data_external_data
     _item_type.code              text
 
-    save_
+
+save_
 
 save__array_data_external_data.uri
     _item_description.description
@@ -1663,7 +1718,8 @@ save__array_data_external_data.uri
     _item.category_id           array_data_external_data
     _item_type.code             code
 
-    save_
+
+save_
 
 save__array_data_external_data.variant
     _item_description.description
@@ -1681,7 +1737,8 @@ save__array_data_external_data.variant
     _item.mandatory_code          implicit
     _item_default.value           .
     _item_type.code               code
-     save_
+
+save_
 
 save__array_data_external_data.version
     _item_description.description
@@ -1693,8 +1750,8 @@ save__array_data_external_data.version
     _item.category_id         array_data_external_data
     _item_type.code           code
 
-    save_
 
+save_
 
 ######################
 # ARRAY_ELEMENT_SIZE #
@@ -1739,8 +1796,8 @@ save_ARRAY_ELEMENT_SIZE
         image_1   2    1.22e-6
 ;
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-     save_
 
+save_
 
 save__array_element_size.array_id
     _item_description.description
@@ -1751,8 +1808,8 @@ save__array_element_size.array_id
     _item.category_id             array_element_size
     _item.mandatory_code          implicit
     _item_type.code               code
-     save_
 
+save_
 
 save__array_element_size.index
     _item_description.description
@@ -1763,8 +1820,8 @@ save__array_element_size.index
     _item.category_id             array_element_size
     _item.mandatory_code          yes
     _item_type.code               int
-     save_
 
+save_
 
 save__array_element_size.size
     _item_description.description
@@ -1781,8 +1838,8 @@ save__array_element_size.size
     _item_range.maximum
     _item_range.minimum
                             .   0.0
-     save_
 
+save_
 
 save__array_element_size.variant
     _item_description.description
@@ -1800,8 +1857,8 @@ save__array_element_size.variant
     _item.mandatory_code          implicit
     _item_default.value           .
     _item_type.code               code
-     save_
 
+save_
 
 #####################
 # ARRAY_INTENSITIES #
@@ -1828,7 +1885,6 @@ save_ARRAY_INTENSITIES
     _category.mandatory_code       no
     _category.NX_mapping_details
 ;
-
     _array_intensities.array_id ARRAYID
     _array_intensities.binary_id BINARYID
     _array_intensities.details DETAILS
@@ -1915,8 +1971,8 @@ save_ARRAY_INTENSITIES
         image_1   linear  1.2    655535   0   2   2    hardware
 ;
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-     save_
 
+save_
 
 save__array_intensities.array_id
     _item_description.description
@@ -1927,8 +1983,8 @@ save__array_intensities.array_id
     _item.category_id             array_intensities
     _item.mandatory_code          implicit
     _item_type.code               code
-     save_
 
+save_
 
 save__array_intensities.binary_id
     _item_description.description
@@ -1939,8 +1995,8 @@ save__array_intensities.binary_id
     _item.category_id             array_intensities
     _item.mandatory_code          implicit
     _item_type.code               int
-     save_
 
+save_
 
 save__array_intensities.details
     _item_description.description
@@ -1952,8 +2008,8 @@ save__array_intensities.details
     _item.mandatory_code          no
     _item_type.code                   text
     _item_examples.case         'Gain_setting: low gain (vrf = -0.300)'
-     save_
 
+save_
 
 save__array_intensities.gain
     _item_description.description
@@ -1974,8 +2030,8 @@ save__array_intensities.gain
     _item_related.related_name
     _item_related.function_code  '_array_intensities.gain_esd'
                                  'associated_value'
-     save_
 
+save_
 
 save__array_intensities.gain_esd
     _item_description.description
@@ -1996,8 +2052,8 @@ save__array_intensities.gain_esd
     _item_related.related_name
     _item_related.function_code  '_array_intensities.gain'
                                  'associated_esd'
-     save_
 
+save_
 
 save__array_intensities.linearity
     _item_description.description
@@ -2083,8 +2139,8 @@ save__array_intensities.linearity
              this data item.
 ;
 
-     save_
 
+save_
 
 save__array_intensities.offset
     _item_description.description
@@ -2095,8 +2151,8 @@ save__array_intensities.offset
     _item.category_id          array_intensities
     _item.mandatory_code       no
     _item_type.code            float
-     save_
 
+save_
 
 save__array_intensities.overload
     _item_description.description
@@ -2112,8 +2168,8 @@ save__array_intensities.overload
     _item.mandatory_code       no
     _item_type.code            float
     _item_units.code          'counts'
-     save_
 
+save_
 
 save__array_intensities.pixel_fast_bin_size
     _item_description.description
@@ -2140,8 +2196,8 @@ save__array_intensities.pixel_fast_bin_size
     _item_range.minimum
                             .   0.0
     _item_units.code           'pixels_per_element'
-     save_
 
+save_
 
 save__array_intensities.pixel_slow_bin_size
     _item_description.description
@@ -2168,8 +2224,8 @@ save__array_intensities.pixel_slow_bin_size
     _item_range.minimum
                             .   0.0
     _item_units.code           'pixels_per_element'
-     save_
 
+save_
 
 save__array_intensities.pixel_binning_method
     _item_description.description
@@ -2210,8 +2266,8 @@ save__array_intensities.pixel_binning_method
 ;              The method used to derive element intensities is not specified.
 ;
     _item_default.value        'unspecified'
-     save_
 
+save_
 
 save__array_intensities.scaling
     _item_description.description
@@ -2223,8 +2279,8 @@ save__array_intensities.scaling
     _item.category_id          array_intensities
     _item.mandatory_code       no
     _item_type.code            float
-     save_
 
+save_
 
 save__array_intensities.undefined_value
     _item_description.description
@@ -2235,8 +2291,8 @@ save__array_intensities.undefined_value
     _item.category_id          array_intensities
     _item.mandatory_code       no
     _item_type.code            float
-     save_
 
+save_
 
 save__array_intensities.underload
     _item_description.description
@@ -2253,8 +2309,9 @@ save__array_intensities.underload
     _item.mandatory_code       no
     _item_type.code            float
     _item_units.code          'counts'
-     save_    
 
+
+save_
 
 save__array_intensities.variant
     _item_description.description
@@ -2272,8 +2329,8 @@ save__array_intensities.variant
     _item.mandatory_code          implicit
     _item_default.value           .
     _item_type.code               code
-     save_
 
+save_
 
 ###################
 # ARRAY_STRUCTURE #
@@ -2324,8 +2381,8 @@ save_ARRAY_STRUCTURE
      image_1       "unsigned 16-bit integer"  none  little_endian
 ;
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-     save_
 
+save_
 
 save__array_structure.byte_order
     _item_description.description
@@ -2354,8 +2411,8 @@ save__array_structure.byte_order
 ;       The last byte in the byte stream of the bytes which make up an
         integer value is the most significant byte of an integer.
 ;
-     save_
 
+save_
 
 save__array_structure.compression_type
     _item_description.description
@@ -2396,8 +2453,8 @@ save__array_structure.compression_type
 ;       Using the 'packed' compression scheme, version 2, as per
         J. P. Abrahams pack_c.c and CBFlib manual, section 3.3.2.
 ;
-     save_
 
+save_
 
 save__array_structure.compression_type_flag
     _item_description.description
@@ -2424,8 +2481,8 @@ save__array_structure.compression_type_flag
         The flag is included for compatibility with software prior to
         CBFlib_0.7.7, and should not be used for new data sets.
 ;
-     save_
 
+save_
 
 save__array_structure.encoding_type
     _item_description.description
@@ -2460,8 +2517,8 @@ save__array_structure.encoding_type
                               'signed 32-bit real IEEE'
                               'signed 64-bit real IEEE'
                               'signed 32-bit complex IEEE'
-     save_
 
+save_
 
 save__array_structure.id
     _item_description.description
@@ -2501,8 +2558,8 @@ save__array_structure.id
              '_diffrn_data_frame.array_id'
                       '_array_structure.id'
 
-     save_
 
+save_
 
 save__array_structure.variant
     _item_description.description
@@ -2520,8 +2577,8 @@ save__array_structure.variant
     _item.mandatory_code          implicit
     _item_default.value           .
     _item_type.code               code
-     save_
 
+save_
 
 ########################
 # ARRAY_STRUCTURE_LIST #
@@ -2539,7 +2596,6 @@ save_ARRAY_STRUCTURE_LIST
     _category.mandatory_code       no
     _category.NX_mapping_details
 ;
-
     _array_structure_list.axis_set_id AXISSETID
     _array_structure_list.array_id ARRAYID
     _array_structure_list.array_section_id ARRAYSECTIONID
@@ -2738,8 +2794,8 @@ save_ARRAY_STRUCTURE_LIST
         image_1   2    1200    2     decreasing  ELEMENY_Y
 ;
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-     save_
 
+save_
 
 save__array_structure_list.array_id
     _item_description.description
@@ -2750,6 +2806,7 @@ save__array_structure_list.array_id
     _item.category_id             array_structure_list
     _item.mandatory_code          implicit
     _item_type.code               code
+
 save_
 
 save__array_structure_list.array_section_id
@@ -2761,8 +2818,8 @@ save__array_structure_list.array_section_id
     _item.category_id             array_structure_list
     _item.mandatory_code          implicit
     _item_type.code               code
-save_
 
+save_
 
 save__array_structure_list.axis_set_id
     _item_description.description
@@ -2794,8 +2851,8 @@ save__array_structure_list.axis_set_id
     _item_linked.parent_name
            '_array_structure_list_axis.axis_set_id'
                                '_array_structure_list.axis_set_id'
-     save_
 
+save_
 
 save__array_structure_list.dimension
     _item_description.description
@@ -2811,8 +2868,8 @@ save__array_structure_list.dimension
     _item_range.minimum
                             1  1
                             .  1
-     save_
 
+save_
 
 save__array_structure_list.direction
     _item_description.description
@@ -2832,8 +2889,8 @@ save__array_structure_list.direction
                               'decreasing'
 ;       Indicates the index changes from the maximum dimension to 1.
 ;
-     save_
 
+save_
 
 save__array_structure_list.index
     _item_description.description
@@ -2863,8 +2920,8 @@ save__array_structure_list.index
     _item_range.minimum
                             1  1
                             .  1
-     save_
 
+save_
 
 save__array_structure_list.precedence
     _item_description.description
@@ -2881,8 +2938,8 @@ save__array_structure_list.precedence
     _item_range.minimum
                             1  1
                             .  1
-     save_
 
+save_
 
 save__array_structure_list.variant
     _item_description.description
@@ -2900,8 +2957,8 @@ save__array_structure_list.variant
     _item.mandatory_code          implicit
     _item_default.value           .
     _item_type.code               code
-     save_
 
+save_
 
 ################################
 # ARRAY_STRUCTURE_LIST_SECTION #
@@ -2938,7 +2995,6 @@ save_ARRAY_STRUCTURE_LIST_SECTION
     _category.mandatory_code       no
     _category.NX_mapping_details
 ;
-
     _array_structure_list_section.array_id ARRAYID -->
     _array_structure_list_section.id SECTIONID -->
     _array_structure_list_section.index INDEX-->
@@ -3012,8 +3068,8 @@ save_ARRAY_STRUCTURE_LIST_SECTION
 
 ;
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-     save_
 
+save_
 
 save__array_structure_list_section.array_id
     _item_description.description
@@ -3024,8 +3080,8 @@ save__array_structure_list_section.array_id
     _item.category_id             array_structure_list_section
     _item.mandatory_code          implicit
     _item_type.code               code
-save_
 
+save_
 
 save__array_structure_list_section.end
     _item_description.description
@@ -3052,8 +3108,8 @@ save__array_structure_list_section.end
     _item_range.minimum
                             1  1
                             .  1
-     save_
 
+save_
 
 save__array_structure_list_section.id
     _item_description.description
@@ -3077,8 +3133,8 @@ save__array_structure_list_section.id
                             '_map_segment.array_section_id'
                               '_array_structure_list_section.id'
 
-save_
 
+save_
 
 save__array_structure_list_section.index
     _item_description.description
@@ -3097,8 +3153,8 @@ save__array_structure_list_section.index
     _item.category_id          array_structure_list_section
     _item.mandatory_code       implicit
     _item_type.code            int
-     save_
 
+save_
 
 save__array_structure_list_section.start
     _item_description.description
@@ -3136,8 +3192,8 @@ save__array_structure_list_section.start
     _item_range.minimum
                             1  1
                             .  1
-     save_
 
+save_
 
 save__array_structure_list_section.stride
     _item_description.description
@@ -3157,8 +3213,8 @@ save__array_structure_list_section.stride
     _item_range.minimum
                             1  1
                             .  1
-     save_
 
+save_
 
 save__array_structure_list_section.variant
     _item_description.description
@@ -3177,8 +3233,8 @@ save__array_structure_list_section.variant
     _item.mandatory_code          implicit
     _item_default.value           .
     _item_type.code               code
-     save_
 
+save_
 
 #############################
 # ARRAY_STRUCTURE_LIST_AXIS #
@@ -3207,7 +3263,6 @@ save_ARRAY_STRUCTURE_LIST_AXIS
     _category.mandatory_code       no
     _category.NX_mapping_details
 ;
-
     _array_structure_list.axis_set_id AXISSETID
     _array_structure_list.array_id ARRAYID
     _array_structure_list.array_section_id ARRAYSECTIONID
@@ -3379,8 +3434,8 @@ save_ARRAY_STRUCTURE_LIST_AXIS
      loop_
     _category_group.id           'inclusive_group'
                                  'array_data_group'
-     save_
 
+save_
 
 save__array_structure_list_axis.axis_id
     _item_description.description
@@ -3398,8 +3453,8 @@ save__array_structure_list_axis.axis_id
     _item.category_id          array_structure_list_axis
     _item.mandatory_code       yes
     _item_type.code            code
-     save_
 
+save_
 
 save__array_structure_list_axis.axis_set_id
     _item_description.description
@@ -3420,8 +3475,8 @@ save__array_structure_list_axis.axis_set_id
     _item.category_id          array_structure_list_axis
     _item.mandatory_code       implicit
     _item_type.code            code
-     save_
 
+save_
 
 save__array_structure_list_axis.angle
     _item_description.description
@@ -3439,8 +3494,8 @@ save__array_structure_list_axis.angle
     _item_default.value        0.0
     _item_type.code            float
     _item_units.code           'degrees'
-     save_
 
+save_
 
 save__array_structure_list_axis.angle_increment
     _item_description.description
@@ -3458,8 +3513,8 @@ save__array_structure_list_axis.angle_increment
     _item_default.value        0.0
     _item_type.code            float
     _item_units.code           'degrees'
-     save_
 
+save_
 
 save__array_structure_list_axis.displacement
     _item_description.description
@@ -3477,8 +3532,8 @@ save__array_structure_list_axis.displacement
     _item_default.value        0.0
     _item_type.code            float
     _item_units.code           'millimetres'
-     save_
 
+save_
 
 save__array_structure_list_axis.fract_displacement
     _item_description.description
@@ -3497,8 +3552,8 @@ save__array_structure_list_axis.fract_displacement
     _item.mandatory_code       no
     _item_default.value        0.0
     _item_type.code            float
-     save_
 
+save_
 
 save__array_structure_list_axis.displacement_increment
     _item_description.description
@@ -3512,8 +3567,8 @@ save__array_structure_list_axis.displacement_increment
     _item_default.value        0.0
     _item_type.code            float
     _item_units.code           'millimetres'
-     save_
 
+save_
 
 save__array_structure_list_axis.fract_displacement_increment
     _item_description.description
@@ -3528,8 +3583,8 @@ save__array_structure_list_axis.fract_displacement_increment
     _item_default.value        0.0
     _item_type.code            float
     _item_units.code           'millimetres'
-     save_
 
+save_
 
 save__array_structure_list_axis.angular_pitch
     _item_description.description
@@ -3550,8 +3605,8 @@ save__array_structure_list_axis.angular_pitch
     _item_default.value        0.0
     _item_type.code            float
     _item_units.code           'millimetres'
-     save_
 
+save_
 
 save__array_structure_list_axis.radial_pitch
     _item_description.description
@@ -3567,8 +3622,8 @@ save__array_structure_list_axis.radial_pitch
     _item_default.value        0.0
     _item_type.code            float
     _item_units.code           'millimetres'
-     save_
 
+save_
 
 save__array_structure_list_axis.reference_angle
     _item_description.description
@@ -3584,8 +3639,8 @@ save__array_structure_list_axis.reference_angle
     _item.mandatory_code       implicit
     _item_type.code            float
     _item_units.code           'degrees'
-     save_
 
+save_
 
 save__array_structure_list_axis.reference_displacement
     _item_description.description
@@ -3601,8 +3656,8 @@ save__array_structure_list_axis.reference_displacement
     _item.mandatory_code       implicit
     _item_type.code            float
     _item_units.code           'millimetres'
-     save_
 
+save_
 
 save__array_structure_list_axis.variant
     _item_description.description
@@ -3620,8 +3675,8 @@ save__array_structure_list_axis.variant
     _item.mandatory_code          implicit
     _item_default.value           .
     _item_type.code               code
-     save_
 
+save_
 
 ########
 # AXIS #
@@ -4352,7 +4407,6 @@ for AXISEQUIPMENT=="general"}
     And so forth.
 ;
 ;
-
      loop_
     _diffrn_detector_axis.detector_id
     _diffrn_detector_axis.axis_id
@@ -5163,8 +5217,8 @@ for AXISEQUIPMENT=="general"}
 ;
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-     save_
 
+save_
 
 save__axis.depends_on
     _item_description.description
@@ -5179,8 +5233,8 @@ save__axis.depends_on
     _item.name                      '_axis.depends_on'
     _item.category_id                 axis
     _item.mandatory_code              no
-     save_
 
+save_
 
 save__axis.equipment
     _item_description.description
@@ -5205,7 +5259,8 @@ save__axis.equipment
                               'axis specifying the downward direction'
                                source
                               'axis specifying the direction sample to source'
-     save_
+
+save_
 
 save__axis.equipment_component
     _item_description.description
@@ -5218,8 +5273,8 @@ save__axis.equipment_component
     _item.category_id                 axis
     _item.mandatory_code              no
     _item_type.code                   ucode
-     save_
 
+save_
 
 save__axis.offset[1]
     _item_description.description
@@ -5235,8 +5290,8 @@ save__axis.offset[1]
     _item_sub_category.id         vector
     _item_type.code               float
     _item_units.code              millimetres
-     save_
 
+save_
 
 save__axis.offset[2]
     _item_description.description
@@ -5252,8 +5307,8 @@ save__axis.offset[2]
     _item_sub_category.id         vector
     _item_type.code               float
     _item_units.code              millimetres
-     save_
 
+save_
 
 save__axis.offset[3]
     _item_description.description
@@ -5269,8 +5324,8 @@ save__axis.offset[3]
     _item_sub_category.id         vector
     _item_type.code               float
     _item_units.code              millimetres
-     save_
 
+save_
 
 save__axis.id
     _item_description.description
@@ -5303,7 +5358,8 @@ save__axis.id
          '_diffrn_measurement_axis.axis_id'   '_axis.id'
          '_diffrn_scan_axis.axis_id'          '_axis.id'
          '_diffrn_scan_frame_axis.axis_id'    '_axis.id'
-     save_
+
+save_
 
 save__axis.rotation
     _item_description.description
@@ -5318,8 +5374,8 @@ save__axis.rotation
     _item_default.value               0.0
     _item_type.code                   float
     _item_units.code                  degrees  
-     save_
 
+save_
 
 save__axis.rotation_axis
     _item_description.description
@@ -5333,8 +5389,8 @@ save__axis.rotation_axis
     _item.category_id                 axis
     _item.mandatory_code              no
     _item_type.code                   ucode   
-     save_
 
+save_
 
 save__axis.system
     _item_description.description
@@ -5377,8 +5433,8 @@ abstract
 ; the axis is referenced to an abstract Cartesian coordinate system
 ;
 
-     save_
 
+save_
 
 save__axis.type
     _item_description.description
@@ -5399,8 +5455,8 @@ save__axis.type
                                  'translation in the direction of the axis'
                                   general
                                  'axis for which the type is not relevant'
-     save_
 
+save_
 
 save__axis.vector[1]
     _item_description.description
@@ -5415,8 +5471,8 @@ save__axis.vector[1]
     _item_default.value           0.0
     _item_sub_category.id         vector
     _item_type.code               float
-     save_
 
+save_
 
 save__axis.vector[2]
     _item_description.description
@@ -5431,8 +5487,8 @@ save__axis.vector[2]
     _item_default.value           0.0
     _item_sub_category.id         vector
     _item_type.code               float
-     save_
 
+save_
 
 save__axis.vector[3]
     _item_description.description
@@ -5447,8 +5503,8 @@ save__axis.vector[3]
     _item_default.value           0.0
     _item_sub_category.id         vector
     _item_type.code               float
-     save_
 
+save_
 
 save__axis.variant
     _item_description.description
@@ -5466,9 +5522,78 @@ save__axis.variant
     _item.mandatory_code          implicit
     _item_default.value           .
     _item_type.code               code
-     save_
+
+save_
+
+###########
+# DIFFRN  #
+###########
+
+save_diffrn
+   _category.description
+;              Data items in the DIFFRN category record details about the
+               diffraction data and their measurement.
+
+               This is a stub category for the cif_img dicionary to
+               complete the tree for tags that are aliases for tags
+               in the various diffrn_... categories in the mmCIF/PDBx
+               dictionary
+;
+
+   _category.id              diffrn
+   _category.mandatory_code  no
+   
+   _category_key.name  "_diffrn.id"
+   
+   loop_
+   _category_group.id
+     inclusive_group
+     diffrn_group
 
 
+save_
+
+save__diffrn.id
+   _item_description.description
+;              This data item uniquely identifies a set of diffraction
+               data.
+;
+
+   #
+   loop_
+   _item.name
+   _item.category_id
+   _item.mandatory_code
+     "_diffrn.id"                        diffrn                 yes
+     "_diffrn_detector.diffrn_id"        diffrn_detector        yes
+     "_diffrn_measurement.diffrn_id"     diffrn_measurement     yes
+     "_diffrn_radiation.diffrn_id"       diffrn_radiation       yes
+     "_diffrn_refln.diffrn_id"           diffrn_refln           yes
+     "_diffrn_reflns.diffrn_id"          diffrn_reflns          yes
+     "_diffrn_source.diffrn_id"          diffrn_source          yes
+     "_map.diffrn_id"                    map                    implicit
+     "_variant.diffrn_id"                variant                implicit
+   #
+   loop_
+   _item_linked.child_name
+   _item_linked.parent_name
+     "_diffrn_detector.diffrn_id"        "_diffrn.id"
+     "_diffrn_measurement.diffrn_id"     "_diffrn.id"
+     "_diffrn_radiation.diffrn_id"       "_diffrn.id"
+     "_diffrn_refln.diffrn_id"           "_diffrn.id"
+     "_diffrn_reflns.diffrn_id"          "_diffrn.id"
+     "_diffrn_source.diffrn_id"          "_diffrn.id"
+     "_map.diffrn_id"                    "_diffrn.id"
+     "_variant.diffrn_id"                "_diffrn.id"
+   #
+   _item_type.code  code
+   #
+   _item_aliases.alias_name  "_diffrn.id"
+   _item_aliases.dictionary  mmcif_pdbx.dic
+   _item_aliases.version     5.385
+
+
+save_
 
 #####################
 # DIFFRN_DATA_FRAME #
@@ -5489,7 +5614,6 @@ save_DIFFRN_DATA_FRAME
     _category.mandatory_code       no
     _category.NX_mapping_details
 ;
-
     _diffrn_data_frame.array_id ARRAYID
     _diffrn_data_frame.array_section_id SECTIONID
     _diffrn_data_frame.binary_id BINID
@@ -5582,8 +5706,8 @@ save_DIFFRN_DATA_FRAME
         frame_1   d1_ccd_4  array_1  4
 ;
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-     save_
 
+save_
 
 save__diffrn_data_frame.array_id
     _item_description.description
@@ -5597,8 +5721,8 @@ save__diffrn_data_frame.array_id
     _item_aliases.dictionary      cif_img.dic
     _item_aliases.version         1.0
     _item_type.code               code
-     save_
 
+save_
 
 save__diffrn_data_frame.array_section_id
     _item_description.description
@@ -5609,8 +5733,8 @@ save__diffrn_data_frame.array_section_id
     _item.category_id             diffrn_data_frame
     _item.mandatory_code          implicit
     _item_type.code               code
-     save_
 
+save_
 
 save__diffrn_data_frame.binary_id
     _item_description.description
@@ -5624,8 +5748,8 @@ save__diffrn_data_frame.binary_id
     _item_aliases.dictionary      cif_img.dic
     _item_aliases.version         1.0
     _item_type.code               int
-     save_
 
+save_
 
 save__diffrn_data_frame.center_fast
     _item_description.description
@@ -5648,8 +5772,8 @@ save__diffrn_data_frame.center_fast
     _item.category_id             diffrn_data_frame
     _item.mandatory_code          no
     _item_type.code               float
-     save_
 
+save_
 
 save__diffrn_data_frame.center_slow
     _item_description.description
@@ -5670,8 +5794,8 @@ save__diffrn_data_frame.center_slow
     _item.category_id             diffrn_data_frame
     _item.mandatory_code          no
     _item_type.code               float
-     save_
 
+save_
 
 save__diffrn_data_frame.center_derived
     _item_description.description
@@ -5686,8 +5810,8 @@ save__diffrn_data_frame.center_derived
     _item.mandatory_code          no
     _item_type.code               ucode
     _item_default.value           'yes'
-     save_
 
+save_
 
 save__diffrn_data_frame.center_units
     _item_description.description
@@ -5718,8 +5842,8 @@ save__diffrn_data_frame.center_units
                                    mm        'millimetres'
                                    pixels    'detector pixels'
                                    bins      'detector bins'
-     save_
 
+save_
 
 save__diffrn_data_frame.detector_element_id
     _item_description.description
@@ -5733,8 +5857,8 @@ save__diffrn_data_frame.detector_element_id
     _item_aliases.dictionary      cif_img.dic
     _item_aliases.version         1.0
     _item_type.code               code
-     save_
 
+save_
 
 save__diffrn_data_frame.id
     _item_description.description
@@ -5771,8 +5895,8 @@ save__diffrn_data_frame.id
                                            '_diffrn_data_frame.id'
            '_diffrn_scan_frame_monitor.frame_id'
                                            '_diffrn_data_frame.id'
-     save_
 
+save_
 
 save__diffrn_data_frame.details
     _item_description.description
@@ -5829,8 +5953,8 @@ BEAM CENTRE = 157.5 157.5;
                315 detector header by CBFlib_0.7.6.  Image provided by Chris
                Nielsen of ADSC from a data collection at SSRL beamline 1-5.
 ;
-     save_
 
+save_
 
 save__diffrn_data_frame.variant
     _item_description.description
@@ -5848,8 +5972,8 @@ save__diffrn_data_frame.variant
     _item.mandatory_code          implicit
     _item_default.value           .
     _item_type.code               code
-     save_
 
+save_
 
 ##########################################################################
 #  The following is a restatement of the mmCIF DIFFRN_DETECTOR,          #
@@ -5872,7 +5996,6 @@ save_DIFFRN_DETECTOR
     _category.mandatory_code      no
     _category.NX_mapping_details
 ;
-
     _diffrn_detector.diffrn_id DIFFRNID 
     _diffrn_detector.id DETECTORNAME 
     _diffrn_detector.details DETAILS
@@ -5919,8 +6042,8 @@ save_DIFFRN_DETECTOR
     _diffrn_detector.type                  'Siemens'
 ;
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-     save_
 
+save_
 
 save__diffrn_detector.details
     _item_description.description
@@ -5934,8 +6057,8 @@ save__diffrn_detector.details
     _item_aliases.version         2.0.1
     _item_type.code                   text
     _item_examples.case        'slow mode'
-     save_
 
+save_
 
 save__diffrn_detector.detector
     _item_description.description
@@ -5959,8 +6082,8 @@ save__diffrn_detector.detector
                                  'scintillation counter'
                                  'CCD plate'
                                  'BF~3~ counter'
-     save_
 
+save_
 
 save__diffrn_detector.diffrn_id
     _item_description.description
@@ -5974,8 +6097,13 @@ save__diffrn_detector.diffrn_id
     _item.category_id             diffrn_detector
     _item.mandatory_code          yes
     _item_type.code               code
-     save_
 
+    _item_aliases.alias_name    '_diffrn.id'
+    _item_aliases.dictionary      mmcif_pdbx.dic
+    _item_aliases.version         5.385
+
+
+save_
 
 save__diffrn_detector.dtime
     _item_description.description
@@ -6000,8 +6128,8 @@ save__diffrn_detector.dtime
                                   0.0   0.0
     _item_type.code               float
     _item_units.code              microseconds
-     save_
 
+save_
 
 save__diffrn_detector.id
     _item_description.description
@@ -6030,8 +6158,8 @@ save__diffrn_detector.id
                                          '_diffrn_detector.id'
 
     _item_type.code               code
-     save_
 
+save_
 
 save__diffrn_detector.layer_thickness
     _item_description.description
@@ -6047,8 +6175,8 @@ save__diffrn_detector.layer_thickness
                                   0.0   0.0
     _item_type.code               float
     _item_units.code              millimetres
-     save_
 
+save_
 
 save__diffrn_detector.gain_setting 
     _item_description.description
@@ -6067,8 +6195,8 @@ save__diffrn_detector.gain_setting
     _item.category_id             diffrn_detector
     _item.mandatory_code          no
     _item_type.code               text
-    save_
 
+save_
 
 save__diffrn_detector.number_of_axes
     _item_description.description
@@ -6096,8 +6224,8 @@ save__diffrn_detector.number_of_axes
     _item_range.minimum           .   1
                                   1   1
     _item_type.code               int
-     save_
 
+save_
 
 save__diffrn_detector.type
     _item_description.description
@@ -6110,8 +6238,8 @@ save__diffrn_detector.type
     _item_aliases.dictionary      cif_core.dic
     _item_aliases.version         2.0.1
     _item_type.code               text
-     save_
 
+save_
 
 save__diffrn_detector.variant
     _item_description.description
@@ -6129,8 +6257,8 @@ save__diffrn_detector.variant
     _item.mandatory_code          implicit
     _item_default.value           .
     _item_type.code               code
-     save_
 
+save_
 
 ########################
 # DIFFRN_DETECTOR_AXIS #
@@ -6146,7 +6274,6 @@ save_DIFFRN_DETECTOR_AXIS
     _category.mandatory_code       no
     _category.NX_mapping_details
 ;
-
     _diffrn_detector_axis.axis_id AXISID --> 
     _diffrn_detector_axis.detector_id DETECTORNAME -->
         /instrument:NXinstrument
@@ -6166,8 +6293,8 @@ the ARRAY_STRUCTURE_LIST_AXIS.
      loop_
     _category_group.id           'inclusive_group'
                                  'diffrn_group'
-     save_
 
+save_
 
 save__diffrn_detector_axis.axis_id
     _item_description.description
@@ -6178,8 +6305,8 @@ save__diffrn_detector_axis.axis_id
     _item.category_id             diffrn_detector_axis
     _item.mandatory_code          yes
     _item_type.code               code
-     save_
 
+save_
 
 save__diffrn_detector_axis.detector_id
     _item_description.description
@@ -6197,8 +6324,8 @@ save__diffrn_detector_axis.detector_id
     _item_aliases.dictionary      cif_img.dic
     _item_aliases.version         1.0
     _item_type.code               code
-     save_
 
+save_
 
 save__diffrn_detector_axis.variant
     _item_description.description
@@ -6216,8 +6343,8 @@ save__diffrn_detector_axis.variant
     _item.mandatory_code          implicit
     _item_default.value           .
     _item_type.code               code
-     save_
 
+save_
 
 ###########################
 # DIFFRN_DETECTOR_ELEMENT #
@@ -6239,7 +6366,6 @@ save_DIFFRN_DETECTOR_ELEMENT
     _category.mandatory_code       no
     _category.NX_mapping_details
 ;
-
     _diffrn_detector_element.id ELEMENTID
     _diffrn_detector_element.detector_id DETECTORNAME
     _diffrn_detector_element.reference_center_fast RCF
@@ -6309,8 +6435,8 @@ save_DIFFRN_DETECTOR_ELEMENT
         d1     d1_ccd_4  -1.7   -1.5  mm
 ;
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-     save_
 
+save_
 
 save__diffrn_detector_element.id
     _item_description.description
@@ -6331,8 +6457,8 @@ save__diffrn_detector_element.id
            '_diffrn_data_frame.detector_element_id'
            '_diffrn_detector_element.id'
 
-     save_
 
+save_
 
 save__diffrn_detector_element.detector_id
     _item_description.description
@@ -6343,8 +6469,8 @@ save__diffrn_detector_element.detector_id
     _item.category_id             diffrn_detector_element
     _item.mandatory_code          yes
     _item_type.code               code
-     save_
 
+save_
 
 save__diffrn_detector_element.reference_center_fast
     _item_description.description
@@ -6371,8 +6497,8 @@ save__diffrn_detector_element.reference_center_fast
     _item.mandatory_code          no
     _item_type.code               float
 
-     save_
 
+save_
 
 save__diffrn_detector_element.reference_center_slow
     _item_description.description
@@ -6396,8 +6522,8 @@ save__diffrn_detector_element.reference_center_slow
     _item.category_id             diffrn_detector_element
     _item.mandatory_code          no
     _item_type.code               float
-     save_
 
+save_
 
 save__diffrn_detector_element.reference_center_units
     _item_description.description
@@ -6428,8 +6554,8 @@ save__diffrn_detector_element.reference_center_units
                                    mm        'millimetres'
                                    pixels    'detector pixels'
                                    bins      'detector bins'
-     save_
 
+save_
 
 save__diffrn_detector_element.variant
     _item_description.description
@@ -6447,8 +6573,8 @@ save__diffrn_detector_element.variant
     _item.mandatory_code          implicit
     _item_default.value           .
     _item_type.code               code
-     save_
 
+save_
 
 ########################
 ## DIFFRN_MEASUREMENT ##
@@ -6466,7 +6592,6 @@ save_DIFFRN_MEASUREMENT
     _category.mandatory_code      no
     _category.NX_mapping_details
 ;
-
     _diffrn_measurement.diffrn_id DIFFRNID
     _diffrn_measurement.details DETAILS
     _diffrn_measurement.device DEVICE
@@ -6538,8 +6663,8 @@ save_DIFFRN_MEASUREMENT
     _diffrn_measurement.method          'theta/2theta (\q/2\q)'
 ;
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-     save_
 
+save_
 
 save__diffrn_measurement.device
     _item_description.description
@@ -6578,8 +6703,8 @@ save__diffrn_measurement.device
                                  'kappa-geometry camera'
                                  'oscillation camera'
                                  'precession camera'
-     save_
 
+save_
 
 save__diffrn_measurement.device_details
     _item_description.description
@@ -6597,8 +6722,8 @@ save__diffrn_measurement.device_details
 ;                                 commercial goniometer modified locally to
                                   allow for 90\% \t arc
 ;
-     save_
 
+save_
 
 save__diffrn_measurement.device_type
     _item_description.description
@@ -6617,8 +6742,8 @@ save__diffrn_measurement.device_type
                                  'Huber model r'
                                  'Enraf-Nonius model s'
                                  'home-made'
-     save_
 
+save_
 
 save__diffrn_measurement.diffrn_id
     _item_description.description
@@ -6629,8 +6754,13 @@ save__diffrn_measurement.diffrn_id
     _item.category_id             diffrn_measurement
     _item.mandatory_code          yes
     _item_type.code               code
-     save_
 
+    _item_aliases.alias_name    '_diffrn_measurement.diffrn.id'
+    _item_aliases.dictionary      mmcif_pdbx.dic
+    _item_aliases.version         5.385
+
+
+save_
 
 save__diffrn_measurement.details
     _item_description.description
@@ -6648,8 +6778,8 @@ save__diffrn_measurement.details
 ;                                 440 frames, 0.20 degrees, 150 sec, detector
                                   distance 12 cm, detector angle 22.5 degrees
 ;
-     save_
 
+save_
 
 save__diffrn_measurement.id
     _item_description.description
@@ -6682,8 +6812,8 @@ save__diffrn_measurement.id
                                          '_diffrn_measurement.id'
 
     _item_type.code               code
-     save_
 
+save_
 
 save__diffrn_measurement.method
     _item_description.description
@@ -6698,8 +6828,8 @@ save__diffrn_measurement.method
     _item_type.code               text
     _item_examples.case
       'profile data from theta/2theta (\q/2\q) scans'
-     save_
 
+save_
 
 save__diffrn_measurement.number_of_axes
     _item_description.description
@@ -6719,8 +6849,8 @@ save__diffrn_measurement.number_of_axes
     _item_range.minimum           .   1
                                   1   1
     _item_type.code               int
-     save_
 
+save_
 
 save__diffrn_measurement.sample_detector_distance
     _item_description.description
@@ -6737,7 +6867,8 @@ save__diffrn_measurement.sample_detector_distance
     _item_range.minimum           .   0.0
     _item_type.code               float
     _item_units.code              'millimetres'
-     save_
+
+save_
 
 save__diffrn_measurement.sample_detector_distance_derived
     _item_description.description
@@ -6751,8 +6882,8 @@ save__diffrn_measurement.sample_detector_distance_derived
     _item.mandatory_code          no
     _item_type.code               ucode
     _item_default.value           'yes'
-     save_
 
+save_
 
 save__diffrn_measurement.sample_detector_voffset
     _item_description.description
@@ -6770,8 +6901,8 @@ save__diffrn_measurement.sample_detector_voffset
                                   .   .
     _item_type.code               float
     _item_units.code              'millimetres'
-     save_
 
+save_
 
 save__diffrn_measurement.specimen_support
     _item_description.description
@@ -6790,8 +6921,8 @@ save__diffrn_measurement.specimen_support
                                  'quartz capillary'
                                  'fiber'
                                  'metal loop'
-     save_
 
+save_
 
 save__diffrn_measurement.variant
     _item_description.description
@@ -6809,8 +6940,8 @@ save__diffrn_measurement.variant
     _item.mandatory_code          implicit
     _item_default.value           .
     _item_type.code               code
-     save_
 
+save_
 
 ###########################
 # DIFFRN_MEASUREMENT_AXIS #
@@ -6826,7 +6957,6 @@ save_DIFFRN_MEASUREMENT_AXIS
     _category.mandatory_code       no
     _category.NX_mapping_details
 ;
-
     _diffrn_measurement_axis.axis_id AXISID
     _diffrn_measurement_axis.measurement_device DEVICE
     _diffrn_measurement_axis.measurement_id GONIOMETER
@@ -6855,8 +6985,8 @@ save_DIFFRN_MEASUREMENT_AXIS
      loop_
     _category_group.id        'inclusive_group'
                               'diffrn_group'
-     save_
 
+save_
 
 save__diffrn_measurement_axis.axis_id
     _item_description.description
@@ -6867,8 +6997,8 @@ save__diffrn_measurement_axis.axis_id
     _item.category_id             diffrn_measurement_axis
     _item.mandatory_code          yes
     _item_type.code               code
-     save_
 
+save_
 
 save__diffrn_measurement_axis.measurement_device
     _item_description.description
@@ -6880,8 +7010,8 @@ save__diffrn_measurement_axis.measurement_device
     _item.category_id             diffrn_measurement_axis
     _item.mandatory_code          implicit
     _item_type.code               text
-     save_
 
+save_
 
 save__diffrn_measurement_axis.measurement_id
     _item_description.description
@@ -6899,8 +7029,8 @@ save__diffrn_measurement_axis.measurement_id
     _item_aliases.dictionary      cif_img.dic
     _item_aliases.version         1.0
     _item_type.code               code
-     save_
 
+save_
 
 save__diffrn_measurement_axis.variant
     _item_description.description
@@ -6918,8 +7048,8 @@ save__diffrn_measurement_axis.variant
     _item.mandatory_code          implicit
     _item_default.value           .
     _item_type.code               code
-     save_
 
+save_
 
 ####################
 # DIFFRN_RADIATION #
@@ -6939,7 +7069,6 @@ save_DIFFRN_RADIATION
     _category.mandatory_code      no
     _category.NX_mapping_details
 ;
-
     _diffrn_radiation.collimation    COLLIMATION
     _diffrn_radiation.diffrn_id      DIFFRNID
     _diffrn_radiation.div_x_source   DIVX
@@ -7061,8 +7190,8 @@ save_DIFFRN_RADIATION
     _diffrn_radiation.monochromator    'graphite'
 ;
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-     save_
 
+save_
 
 save__diffrn_radiation.beam_width
     _item_description.description
@@ -7074,8 +7203,8 @@ save__diffrn_radiation.beam_width
     _item.mandatory_code          no
     _item_type.code               float
     _item_units.code              micrometres
-     save_
 
+save_
 
 save__diffrn_radiation.beam_height
     _item_description.description
@@ -7088,8 +7217,8 @@ save__diffrn_radiation.beam_height
     _item.mandatory_code          no
     _item_type.code               float
     _item_units.code              micrometres
-     save_
 
+save_
 
 save__diffrn_radiation.beam_flux
     _item_description.description
@@ -7104,7 +7233,8 @@ save__diffrn_radiation.beam_flux
     _item.mandatory_code          no
     _item_type.code               float
     _item_units.code              photons_per_second
-     save_
+
+save_
 
 save__diffrn_radiation.beam_flux_density
     _item_description.description
@@ -7115,8 +7245,8 @@ save__diffrn_radiation.beam_flux_density
     _item.mandatory_code          no
     _item_type.code               float
     _item_units.code              photons_per_second_per_micrometre_squared
-     save_
 
+save_
 
 save__diffrn_radiation.beam_flux_density_integrated
     _item_description.description
@@ -7129,8 +7259,8 @@ save__diffrn_radiation.beam_flux_density_integrated
     _item.mandatory_code          no
     _item_type.code               float
     _item_units.code              photons_per_micrometre_squared
-     save_
 
+save_
 
 save__diffrn_radiation.beam_flux_integrated
     _item_description.description
@@ -7145,8 +7275,8 @@ save__diffrn_radiation.beam_flux_integrated
     _item.mandatory_code          no
     _item_type.code               float
     _item_units.code              photons
-     save_
 
+save_
 
 save__diffrn_radiation.beam_flux_integration_time
     _item_description.description
@@ -7158,8 +7288,8 @@ save__diffrn_radiation.beam_flux_integration_time
     _item.mandatory_code          no
     _item_type.code               float
     _item_units.code              seconds
-     save_
 
+save_
 
 save__diffrn_radiation.beam_incident_flux
     _item_description.description
@@ -7173,8 +7303,8 @@ save__diffrn_radiation.beam_incident_flux
     _item.mandatory_code          no
     _item_type.code               float
     _item_units.code              photons_per_second
-     save_
 
+save_
 
 save__diffrn_radiation.beam_incident_flux_integrated
     _item_description.description
@@ -7189,7 +7319,8 @@ save__diffrn_radiation.beam_incident_flux_integrated
     _item.mandatory_code          no
     _item_type.code               float
     _item_units.code              photons
-     save_
+
+save_
 
 save__diffrn_radiation.collimation
     _item_description.description
@@ -7206,8 +7337,8 @@ save__diffrn_radiation.collimation
     _item_examples.case          '0.3 mm double-pinhole'
                                  '0.5 mm'
                                  'focusing mirrors'
-     save_
 
+save_
 
 save__diffrn_radiation.diffrn_id
     _item_description.description
@@ -7218,8 +7349,13 @@ save__diffrn_radiation.diffrn_id
     _item.category_id             diffrn_radiation
     _item.mandatory_code          yes
     _item_type.code               code
-     save_
 
+    _item_aliases.alias_name    '_diffrn_radiation.diffrn.id'
+    _item_aliases.dictionary      mmcif_pdbx.dic
+    _item_aliases.version         5.385
+
+
+save_
 
 save__diffrn_radiation.div_x_source
     _item_description.description
@@ -7244,8 +7380,8 @@ save__diffrn_radiation.div_x_source
     _item.mandatory_code          no
     _item_type.code               float
     _item_units.code              degrees
-     save_
 
+save_
 
 save__diffrn_radiation.div_y_source
     _item_description.description
@@ -7271,8 +7407,8 @@ save__diffrn_radiation.div_y_source
     _item_type.code               float
     _item_units.code              degrees
     _item_default.value           0.0
-     save_
 
+save_
 
 save__diffrn_radiation.div_x_y_source
     _item_description.description
@@ -7301,8 +7437,8 @@ save__diffrn_radiation.div_x_y_source
     _item_type.code               float
     _item_units.code              degrees_squared
     _item_default.value           0.0
-     save_
 
+save_
 
 save__diffrn_radiation.filter_edge
     _item_description.description
@@ -7320,8 +7456,8 @@ save__diffrn_radiation.filter_edge
                                   0.0   0.0
     _item_type.code               float
     _item_units.code              angstroms
-     save_
 
+save_
 
 save__diffrn_radiation.inhomogeneity
     _item_description.description
@@ -7340,8 +7476,8 @@ save__diffrn_radiation.inhomogeneity
                                   0.0   0.0
     _item_type.code               float
     _item_units.code              millimetres
-     save_
 
+save_
 
 save__diffrn_radiation.monochromator
     _item_description.description
@@ -7361,8 +7497,8 @@ save__diffrn_radiation.monochromator
                                  'Ge 220'
                                  'none'
                                  'equatorial mounted graphite'
-     save_
 
+save_
 
 save__diffrn_radiation.polarisn_norm
     _item_description.description
@@ -7383,8 +7519,8 @@ save__diffrn_radiation.polarisn_norm
                                  -90.0 -90.0
     _item_type.code               float
     _item_units.code              degrees
-     save_
 
+save_
 
 save__diffrn_radiation.polarisn_norm_esd
     _item_description.description
@@ -7407,8 +7543,8 @@ save__diffrn_radiation.polarisn_norm_esd
     _item_related.related_name
     _item_related.function_code  '_diffrn_radiation.polarisn_norm'
                                  'associated_value'
-     save_
 
+save_
 
 save__diffrn_radiation.polarisn_ratio
     _item_description.description
@@ -7431,8 +7567,8 @@ save__diffrn_radiation.polarisn_ratio
     _item_range.minimum            .    0.0
                                   0.0   0.0
     _item_type.code               float
-     save_
 
+save_
 
 save__diffrn_radiation.polarisn_ratio_esd
     _item_description.description
@@ -7453,8 +7589,8 @@ save__diffrn_radiation.polarisn_ratio_esd
     _item_related.related_name
     _item_related.function_code  '_diffrn_radiation.polarisn_ratio'
                                  'associated_value'
-     save_
 
+save_
 
 save__diffrn_radiation.polarizn_source_norm
     _item_description.description
@@ -7490,8 +7626,8 @@ save__diffrn_radiation.polarizn_source_norm
     _item_type.code               float
     _item_units.code              degrees
     _item_default.value           0.0
-     save_
 
+save_
 
 save__diffrn_radiation.polarizn_source_norm_esd
     _item_description.description
@@ -7515,8 +7651,8 @@ save__diffrn_radiation.polarizn_source_norm_esd
     _item_related.related_name
     _item_related.function_code  '_diffrn_radiation.polarizn_source_norm'
                                  'associated_value'
-     save_
 
+save_
 
 save__diffrn_radiation.polarizn_source_ratio
     _item_description.description
@@ -7567,8 +7703,8 @@ save__diffrn_radiation.polarizn_source_ratio
                                   1.0   -1.0
                                  -1.0   -1.0
     _item_type.code               float
-     save_
 
+save_
 
 save__diffrn_radiation.polarizn_source_ratio_esd
     _item_description.description
@@ -7592,8 +7728,8 @@ save__diffrn_radiation.polarizn_source_ratio_esd
     _item_related.related_name
     _item_related.function_code  '_diffrn_radiation.polarizn_source_ratio'
                                  'associated_value'
-     save_
 
+save_
 
 save__diffrn_radiation.polarizn_Stokes_I
     _item_description.description
@@ -7634,8 +7770,8 @@ save__diffrn_radiation.polarizn_Stokes_I
                                    .    0.0
                                   0.0   0.0
     _item_type.code               float
-     save_
 
+save_
 
 save__diffrn_radiation.polarizn_Stokes_I_esd
     _item_description.description
@@ -7660,8 +7796,8 @@ save__diffrn_radiation.polarizn_Stokes_I_esd
     _item_related.related_name
     _item_related.function_code  '_diffrn_radiation.polarizn_Stokes_I'
                                  'associated_value'
-     save_
 
+save_
 
 save__diffrn_radiation.polarizn_Stokes_Q
     _item_description.description
@@ -7696,8 +7832,8 @@ save__diffrn_radiation.polarizn_Stokes_Q
     _item.mandatory_code          no
      loop_
     _item_type.code               float
-     save_
 
+save_
 
 save__diffrn_radiation.polarizn_Stokes_Q_esd
     _item_description.description
@@ -7724,8 +7860,8 @@ save__diffrn_radiation.polarizn_Stokes_Q_esd
     _item_related.related_name
     _item_related.function_code  '_diffrn_radiation.polarizn_Stokes_Q'
                                  'associated_value'
-     save_
 
+save_
 
 save__diffrn_radiation.polarizn_Stokes_U
     _item_description.description
@@ -7760,8 +7896,8 @@ save__diffrn_radiation.polarizn_Stokes_U
     _item.mandatory_code          no
      loop_
     _item_type.code               float
-     save_
 
+save_
 
 save__diffrn_radiation.polarizn_Stokes_U_esd
     _item_description.description
@@ -7788,12 +7924,12 @@ save__diffrn_radiation.polarizn_Stokes_U_esd
     _item_related.related_name
     _item_related.function_code  '_diffrn_radiation.polarizn_Stokes_U'
                                  'associated_value'
-     save_
 
+save_
 
 save__diffrn_radiation.polarizn_Stokes_V
     _item_description.description
-;             The quantity2*sqrt(IpIn), with a + sign for right-handed
+;             The quantity +/-2*sqrt(IpIn), with a + sign for right-handed
               circular polarization, where Ip is the intensity
               (amplitude squared) of the electric vector in the plane of
               polarization and In is the intensity (amplitude squared) of
@@ -7825,14 +7961,14 @@ save__diffrn_radiation.polarizn_Stokes_V
     _item.mandatory_code          no
      loop_
     _item_type.code               float
-     save_
 
+save_
 
 save__diffrn_radiation.polarizn_Stokes_V_esd
     _item_description.description
 ;             The standard uncertainty (estimated standard deviation, e.s.d.)
               of _diffrn_radiation.polarizn_Stokes_V,
-             2*sqrt(IpIn), with a + sign for right-handed circular
+             +/-2*sqrt(IpIn), with a + sign for right-handed circular
               polarization, where Ip is the intensity
               (amplitude squared) of the electric vector in the plane of
               polarization and In is the intensity (amplitude squared) of
@@ -7854,8 +7990,8 @@ save__diffrn_radiation.polarizn_Stokes_V_esd
     _item_related.related_name
     _item_related.function_code  '_diffrn_radiation.polarizn_Stokes_V'
                                  'associated_value'
-     save_
 
+save_
 
 save__diffrn_radiation.probe
     _item_description.description
@@ -7875,8 +8011,8 @@ save__diffrn_radiation.probe
                                  'neutron'
                                  'electron'
                                  'gamma'
-     save_
 
+save_
 
 save__diffrn_radiation.type
     _item_description.description
@@ -7895,8 +8031,8 @@ save__diffrn_radiation.type
                                  'Cu K\a~1~'
                                  'Cu K-L~2,3~'
                                  'white-beam'
-     save_
 
+save_
 
 save__diffrn_radiation.xray_symbol
     _item_description.description
@@ -7920,8 +8056,8 @@ save__diffrn_radiation.xray_symbol
                                  'K\b~1~ in older Siegbahn notation'
                                  'K-L~2,3~'
                                  'use where K-L~3~ and K-L~2~ are not resolved'
-     save_
 
+save_
 
 save__diffrn_radiation.wavelength_id
     _item_description.description
@@ -7933,8 +8069,8 @@ save__diffrn_radiation.wavelength_id
     _item.category_id             diffrn_radiation
     _item.mandatory_code          yes
     _item_type.code               code
-     save_
 
+save_
 
 save__diffrn_radiation.variant
     _item_description.description
@@ -7952,8 +8088,8 @@ save__diffrn_radiation.variant
     _item.mandatory_code          implicit
     _item_default.value           .
     _item_type.code               code
-     save_
 
+save_
 
 ################
 # DIFFRN_REFLN #
@@ -7992,8 +8128,8 @@ save_DIFFRN_REFLN
      loop_
     _category_group.id             'inclusive_group'
                                    'diffrn_group'
-     save_
 
+save_
 
 save__diffrn_refln.frame_id
     _item_description.description
@@ -8004,7 +8140,8 @@ save__diffrn_refln.frame_id
     _item.category_id             diffrn_refln
     _item.mandatory_code          yes
     _item_type.code               code
-     save_
+
+save_
 
 save__diffrn_refln.variant
     _item_description.description
@@ -8022,8 +8159,8 @@ save__diffrn_refln.variant
     _item.mandatory_code          implicit
     _item_default.value           .
     _item_type.code               code
-     save_
 
+save_
 
 save__diffrn_refln.id
     _item_description.description
@@ -8034,8 +8171,8 @@ save__diffrn_refln.id
     _item.category_id             diffrn_refln
     _item.mandatory_code          yes
     _item_type.code               code
-     save_
 
+save_
 
 save__diffrn_refln.diffrn_id
     _item_description.description
@@ -8046,8 +8183,13 @@ save__diffrn_refln.diffrn_id
     _item.category_id             diffrn_refln
     _item.mandatory_code          yes
     _item_type.code               code
-     save_
+ 
+    _item_aliases.alias_name    '_diffrn_refln.diffrn_id'
+    _item_aliases.dictionary      mmcif_pdbx.dic
+    _item_aliases.version         5.385
 
+
+save_
 
 ###############
 # DIFFRN_SCAN #
@@ -8690,8 +8832,8 @@ save_DIFFRN_SCAN
      ;
 ;
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-       save_
 
+save_
 
 save__diffrn_scan.id
     _item_description.description
@@ -8715,8 +8857,8 @@ save__diffrn_scan.id
        '_diffrn_scan_axis.scan_id'          '_diffrn_scan.id'
        '_diffrn_scan_axis.scan_id'          '_diffrn_scan.id'
        '_diffrn_scan_frame.scan_id'         '_diffrn_scan.id'
-     save_
 
+save_
 
 save__diffrn_scan.date_end
     _item_description.description
@@ -8729,8 +8871,8 @@ save__diffrn_scan.date_end
     _item.category_id          diffrn_scan
     _item.mandatory_code       no
     _item_type.code            yyyy-mm-dd
-     save_
 
+save_
 
 save__diffrn_scan.date_end_estimated
     _item_description.description
@@ -8742,8 +8884,8 @@ save__diffrn_scan.date_end_estimated
     _item.category_id          diffrn_scan
     _item.mandatory_code       yes
     _item_type.code            yyyy-mm-dd
-     save_
 
+save_
 
 save__diffrn_scan.date_start
     _item_description.description
@@ -8753,8 +8895,8 @@ save__diffrn_scan.date_start
     _item.category_id          diffrn_scan
     _item.mandatory_code       yes
     _item_type.code            yyyy-mm-dd
-     save_
 
+save_
 
 save__diffrn_scan.integration_time
     _item_description.description
@@ -8773,8 +8915,8 @@ save__diffrn_scan.integration_time
     _item_range.maximum
     _item_range.minimum
                             .   0.0
-     save_
 
+save_
 
 save__diffrn_scan.frame_id_start
     _item_description.description
@@ -8788,8 +8930,8 @@ save__diffrn_scan.frame_id_start
     _item.category_id          diffrn_scan
     _item.mandatory_code       yes
     _item_type.code            code
-     save_
 
+save_
 
 save__diffrn_scan.frame_id_end
     _item_description.description
@@ -8803,8 +8945,8 @@ save__diffrn_scan.frame_id_end
     _item.category_id          diffrn_scan
     _item.mandatory_code       yes
     _item_type.code            code
-     save_
 
+save_
 
 save__diffrn_scan.frames
     _item_description.description
@@ -8820,7 +8962,8 @@ save__diffrn_scan.frames
     _item_range.minimum
                             .   1
                             1   1
-     save_
+
+save_
 
 save__diffrn_scan.time_period
     _item_description.description
@@ -8838,8 +8981,8 @@ save__diffrn_scan.time_period
     _item_range.maximum
     _item_range.minimum
                             .   0.0
-     save_
 
+save_
 
 save__diffrn_scan.time_rstrt_incr
     _item_description.description
@@ -8869,8 +9012,8 @@ save__diffrn_scan.time_rstrt_incr
     _item_range.maximum
     _item_range.minimum
                             .   0.0
-     save_
 
+save_
 
 save__diffrn_scan.variant
     _item_description.description
@@ -8888,8 +9031,8 @@ save__diffrn_scan.variant
     _item.mandatory_code          implicit
     _item_default.value           .
     _item_type.code               code
-     save_
 
+save_
 
 ####################
 # DIFFRN_SCAN_AXIS #
@@ -8957,8 +9100,8 @@ save_DIFFRN_SCAN_AXIS
      loop_
     _category_group.id           'inclusive_group'
                                  'diffrn_group'
-     save_
 
+save_
 
 save__diffrn_scan_axis.scan_id
     _item_description.description
@@ -8975,8 +9118,8 @@ save__diffrn_scan_axis.scan_id
     _item.category_id          diffrn_scan_axis
     _item.mandatory_code       yes
     _item_type.code            code
-     save_
 
+save_
 
 save__diffrn_scan_axis.axis_id
     _item_description.description
@@ -8993,8 +9136,8 @@ save__diffrn_scan_axis.axis_id
     _item.category_id          diffrn_scan_axis
     _item.mandatory_code       yes
     _item_type.code            code
-     save_
 
+save_
 
 save__diffrn_scan_axis.angle_start
     _item_description.description
@@ -9006,8 +9149,8 @@ save__diffrn_scan_axis.angle_start
     _item_default.value        0.0
     _item_type.code            float
     _item_units.code           'degrees'
-     save_
 
+save_
 
 save__diffrn_scan_axis.angle_range
     _item_description.description
@@ -9020,8 +9163,8 @@ save__diffrn_scan_axis.angle_range
     _item_default.value        0.0
     _item_type.code            float
     _item_units.code           'degrees'
-     save_
 
+save_
 
 save__diffrn_scan_axis.angle_increment
     _item_description.description
@@ -9045,8 +9188,8 @@ save__diffrn_scan_axis.angle_increment
     _item_default.value        0.0
     _item_type.code            float
     _item_units.code           'degrees'
-     save_
 
+save_
 
 save__diffrn_scan_axis.angle_rstrt_incr
     _item_description.description
@@ -9073,8 +9216,8 @@ save__diffrn_scan_axis.angle_rstrt_incr
     _item_default.value        0.0
     _item_type.code            float
     _item_units.code           'degrees'
-     save_
 
+save_
 
 save__diffrn_scan_axis.displacement_start
     _item_description.description
@@ -9086,8 +9229,8 @@ save__diffrn_scan_axis.displacement_start
     _item_default.value        0.0
     _item_type.code            float
     _item_units.code           'millimetres'
-     save_
 
+save_
 
 save__diffrn_scan_axis.displacement_range
     _item_description.description
@@ -9100,8 +9243,8 @@ save__diffrn_scan_axis.displacement_range
     _item_default.value        0.0
     _item_type.code            float
     _item_units.code           'millimetres'
-     save_
 
+save_
 
 save__diffrn_scan_axis.displacement_increment
     _item_description.description
@@ -9125,8 +9268,8 @@ save__diffrn_scan_axis.displacement_increment
     _item_default.value        0.0
     _item_type.code            float
     _item_units.code           'millimetres'
-     save_
 
+save_
 
 save__diffrn_scan_axis.displacement_rstrt_incr
     _item_description.description
@@ -9153,8 +9296,8 @@ save__diffrn_scan_axis.displacement_rstrt_incr
     _item_default.value        0.0
     _item_type.code            float
     _item_units.code           'millimetres'
-     save_
 
+save_
 
 save__diffrn_scan_axis.reference_angle
     _item_description.description
@@ -9179,8 +9322,8 @@ save__diffrn_scan_axis.reference_angle
     _item_default.value        0.0
     _item_type.code            float
     _item_units.code           'degrees'
-     save_
 
+save_
 
 save__diffrn_scan_axis.reference_displacement
     _item_description.description
@@ -9203,8 +9346,8 @@ save__diffrn_scan_axis.reference_displacement
     _item.mandatory_code       implicit
     _item_type.code            float
     _item_units.code           'millimetres'
-     save_
 
+save_
 
 save__diffrn_scan_axis.variant
     _item_description.description
@@ -9222,8 +9365,8 @@ save__diffrn_scan_axis.variant
     _item.mandatory_code          implicit
     _item_default.value           .
     _item_type.code               code
-     save_
 
+save_
 
 ##########################
 # DIFFRN_SCAN_COLLECTION #
@@ -9241,7 +9384,6 @@ save_DIFFRN_SCAN_COLLECTION
     _category.mandatory_code       no
     _category.NX_mapping_details
 ;
-
     _diffrn_scan_collection.type  COLLECTIONTYPE
     _diffrn_scan_collection.translation_width TRANSLATION_WIDTH
 
@@ -9281,8 +9423,8 @@ save_DIFFRN_SCAN_COLLECTION
     ;
 ;
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-     save_
 
+save_
 
 save__diffrn_scan_collection.details
     _item_description.description
@@ -9293,8 +9435,8 @@ save__diffrn_scan_collection.details
     _item.category_id             diffrn_scan_collection
     _item.mandatory_code          no
     _item_type.code               text
-     save_
 
+save_
 
 save__diffrn_scan_collection.scan_id
     _item_description.description
@@ -9310,8 +9452,8 @@ save__diffrn_scan_collection.scan_id
     _item.category_id        diffrn_scan_collection
     _item.mandatory_code     implicit
     _item_type.code          code
-     save_
 
+save_
 
 save__diffrn_scan_collection.type
     _item_description.description
@@ -9326,8 +9468,8 @@ save__diffrn_scan_collection.type
     _item.mandatory_code          implicit
     _item_default.value           'rotation'
     _item_type.code               text
-     save_
 
+save_
 
 save__diffrn_scan_collection.translation_width
     _item_description.description
@@ -9343,8 +9485,8 @@ save__diffrn_scan_collection.translation_width
     _item_type.code               float
     _item_units.code              micrometres
 
-     save_
 
+save_
 
 save__diffrn_scan_collection.variant
     _item_description.description
@@ -9362,8 +9504,8 @@ save__diffrn_scan_collection.variant
     _item.mandatory_code          implicit
     _item_default.value           .
     _item_type.code               code
-     save_
 
+save_
 
 #####################
 # DIFFRN_SCAN_FRAME #
@@ -9417,8 +9559,8 @@ save_DIFFRN_SCAN_FRAME
      loop_
     _category_group.id            'inclusive_group'
                                   'diffrn_group'
-     save_
 
+save_
 
 save__diffrn_scan_frame.date
     _item_description.description
@@ -9428,8 +9570,8 @@ save__diffrn_scan_frame.date
     _item.category_id          diffrn_scan_frame
     _item.mandatory_code       no
     _item_type.code            yyyy-mm-dd
-     save_
 
+save_
 
 save__diffrn_scan_frame.frame_id
     _item_description.description
@@ -9443,8 +9585,8 @@ save__diffrn_scan_frame.frame_id
     _item.category_id          diffrn_scan_frame
     _item.mandatory_code       yes
     _item_type.code            code
-     save_
 
+save_
 
 save__diffrn_scan_frame.frame_number
     _item_description.description
@@ -9463,8 +9605,8 @@ save__diffrn_scan_frame.frame_number
     _item_range.minimum
                             .   0
                             0   0
-     save_
 
+save_
 
 save__diffrn_scan_frame.integration_time
     _item_description.description
@@ -9483,8 +9625,8 @@ save__diffrn_scan_frame.integration_time
     _item_range.maximum
     _item_range.minimum
                             .   0.0
-     save_
 
+save_
 
 save__diffrn_scan_frame.polarizn_Stokes_I
     _item_description.description
@@ -9525,7 +9667,8 @@ save__diffrn_scan_frame.polarizn_Stokes_I
                                    .    0.0
                                   0.0   0.0
     _item_type.code               float
-     save_
+
+save_
 
 save__diffrn_scan_frame.polarizn_Stokes_I_esd
     _item_description.description
@@ -9550,8 +9693,8 @@ save__diffrn_scan_frame.polarizn_Stokes_I_esd
     _item_related.related_name
     _item_related.function_code  '_diffrn_scan_frame.polarizn_Stokes_I'
                                  'associated_value'
-     save_
 
+save_
 
 save__diffrn_scan_frame.polarizn_Stokes_Q
     _item_description.description
@@ -9586,8 +9729,8 @@ save__diffrn_scan_frame.polarizn_Stokes_Q
     _item.mandatory_code          no
      loop_
     _item_type.code               float
-     save_
 
+save_
 
 save__diffrn_scan_frame.polarizn_Stokes_Q_esd
     _item_description.description
@@ -9614,8 +9757,8 @@ save__diffrn_scan_frame.polarizn_Stokes_Q_esd
     _item_related.related_name
     _item_related.function_code  '_diffrn_scan_frame.polarizn_Stokes_Q'
                                  'associated_value'
-     save_
 
+save_
 
 save__diffrn_scan_frame.polarizn_Stokes_U
     _item_description.description
@@ -9650,7 +9793,8 @@ save__diffrn_scan_frame.polarizn_Stokes_U
     _item.mandatory_code          no
      loop_
     _item_type.code               float
-     save_
+
+save_
 
 save__diffrn_scan_frame.polarizn_Stokes_U_esd
     _item_description.description
@@ -9677,8 +9821,8 @@ save__diffrn_scan_frame.polarizn_Stokes_U_esd
     _item_related.related_name
     _item_related.function_code  '_diffrn_scan_frame.polarizn_Stokes_U'
                                  'associated_value'
-     save_
 
+save_
 
 save__diffrn_scan_frame.polarizn_Stokes_V
     _item_description.description
@@ -9714,8 +9858,8 @@ save__diffrn_scan_frame.polarizn_Stokes_V
     _item.mandatory_code          no
      loop_
     _item_type.code               float
-     save_
 
+save_
 
 save__diffrn_scan_frame.polarizn_Stokes_V_esd
     _item_description.description
@@ -9743,8 +9887,8 @@ save__diffrn_scan_frame.polarizn_Stokes_V_esd
     _item_related.related_name
     _item_related.function_code  '_diffrn_scan_frame.polarizn_Stokes_V'
                                  'associated_value'
-     save_
 
+save_
 
 save__diffrn_scan_frame.scan_id
     _item_description.description
@@ -9758,8 +9902,8 @@ save__diffrn_scan_frame.scan_id
     _item.category_id        diffrn_scan_frame
     _item.mandatory_code     yes
     _item_type.code          code
-     save_
 
+save_
 
 save__diffrn_scan_frame.time_period
     _item_description.description
@@ -9776,8 +9920,8 @@ save__diffrn_scan_frame.time_period
     _item_range.maximum
     _item_range.minimum
                             .   0.0
-     save_
 
+save_
 
 save__diffrn_scan_frame.time_rstrt_incr
     _item_description.description
@@ -9805,8 +9949,8 @@ save__diffrn_scan_frame.time_rstrt_incr
     _item_range.maximum
     _item_range.minimum
                             .   0.0
-     save_
 
+save_
 
 save__diffrn_scan_frame.variant
     _item_description.description
@@ -9824,8 +9968,8 @@ save__diffrn_scan_frame.variant
     _item.mandatory_code          implicit
     _item_default.value           .
     _item_type.code               code
-     save_
 
+save_
 
 ##########################
 # DIFFRN_SCAN_FRAME_AXIS #
@@ -9844,7 +9988,6 @@ save_DIFFRN_SCAN_FRAME_AXIS
     _category.mandatory_code       no
     _category.NX_mapping_details
 ;
-
     _diffrn_scan_frame_axis.axis_id AXISID
     _diffrn_scan_frame_axis.angle ANGLE
     _diffrn_scan_frame_axis.angle_increment ANGLEINCREMENT
@@ -9903,8 +10046,8 @@ save_DIFFRN_SCAN_FRAME_AXIS
      loop_
     _category_group.id           'inclusive_group'
                                  'diffrn_group'
-     save_
 
+save_
 
 save__diffrn_scan_frame_axis.axis_id
     _item_description.description
@@ -9921,8 +10064,8 @@ save__diffrn_scan_frame_axis.axis_id
     _item.category_id          diffrn_scan_frame_axis
     _item.mandatory_code       yes
     _item_type.code            code
-     save_
 
+save_
 
 save__diffrn_scan_frame_axis.angle
     _item_description.description
@@ -9935,8 +10078,8 @@ save__diffrn_scan_frame_axis.angle
     _item_default.value        0.0
     _item_type.code            float
     _item_units.code           'degrees'
-     save_
 
+save_
 
 save__diffrn_scan_frame_axis.angle_increment
     _item_description.description
@@ -9953,8 +10096,8 @@ save__diffrn_scan_frame_axis.angle_increment
     _item_default.value        0.0
     _item_type.code            float
     _item_units.code           'degrees'
-     save_
 
+save_
 
 save__diffrn_scan_frame_axis.angle_rstrt_incr
     _item_description.description
@@ -9973,8 +10116,8 @@ save__diffrn_scan_frame_axis.angle_rstrt_incr
     _item_default.value        0.0
     _item_type.code            float
     _item_units.code           'degrees'
-     save_
 
+save_
 
 save__diffrn_scan_frame_axis.displacement
     _item_description.description
@@ -9988,8 +10131,8 @@ save__diffrn_scan_frame_axis.displacement
     _item_default.value        0.0
     _item_type.code            float
     _item_units.code           'millimetres'
-     save_
 
+save_
 
 save__diffrn_scan_frame_axis.displacement_increment
     _item_description.description
@@ -10006,8 +10149,8 @@ save__diffrn_scan_frame_axis.displacement_increment
     _item_default.value        0.0
     _item_type.code            float
     _item_units.code           'millimetres'
-     save_
 
+save_
 
 save__diffrn_scan_frame_axis.displacement_rstrt_incr
     _item_description.description
@@ -10026,8 +10169,8 @@ save__diffrn_scan_frame_axis.displacement_rstrt_incr
     _item_default.value        0.0
     _item_type.code            float
     _item_units.code           'millimetres'
-     save_
 
+save_
 
 save__diffrn_scan_frame_axis.frame_id
     _item_description.description
@@ -10044,8 +10187,8 @@ save__diffrn_scan_frame_axis.frame_id
     _item.category_id          diffrn_scan_frame_axis
     _item.mandatory_code       yes
     _item_type.code            code
-     save_
 
+save_
 
 save__diffrn_scan_frame_axis.reference_angle
     _item_description.description
@@ -10065,8 +10208,8 @@ save__diffrn_scan_frame_axis.reference_angle
     _item_default.value        0.0
     _item_type.code            float
     _item_units.code           'degrees'
-     save_
 
+save_
 
 save__diffrn_scan_frame_axis.reference_displacement
     _item_description.description
@@ -10086,8 +10229,8 @@ save__diffrn_scan_frame_axis.reference_displacement
     _item.mandatory_code       implicit
     _item_type.code            float
     _item_units.code           'millimetres'
-     save_
 
+save_
 
 save__diffrn_scan_frame_axis.variant
     _item_description.description
@@ -10105,8 +10248,8 @@ save__diffrn_scan_frame_axis.variant
     _item.mandatory_code          implicit
     _item_default.value           .
     _item_type.code               code
-     save_
 
+save_
 
 #############################
 # DIFFRN_SCAN_FRAME_MONITOR #
@@ -10144,7 +10287,6 @@ save_DIFFRN_SCAN_FRAME_MONITOR
     _category.mandatory_code       no
     _category.NX_mapping_details
 ;
-
     _diffrn_scan_frame_monitor.id MONID -->
     _diffrn_scan_frame_monitor.detector_id DETECTORNAME -->
     _diffrn_scan_frame_monitor.scan_id SCANID -->
@@ -10185,7 +10327,6 @@ save_DIFFRN_SCAN_FRAME_MONITOR
     sampled every 2 seconds in a 20 second scan.
 ;
 ;
-
      # category DIFFRN_DETECTOR
      loop_
      _diffrn_detector.diffrn_id
@@ -10312,8 +10453,8 @@ save_DIFFRN_SCAN_FRAME_MONITOR
 
 ;
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-     save_
 
+save_
 
 save__diffrn_scan_frame_monitor.id
     _item_description.description
@@ -10336,8 +10477,8 @@ save__diffrn_scan_frame_monitor.id
     _item_range.minimum
                             1  1
                             .  1
-     save_
 
+save_
 
 save__diffrn_scan_frame_monitor.detector_id
     _item_description.description
@@ -10349,8 +10490,8 @@ save__diffrn_scan_frame_monitor.detector_id
     _item.category_id             diffrn_scan_frame_monitor
     _item.mandatory_code          yes
     _item_type.code               code
-     save_
 
+save_
 
 save__diffrn_scan_frame_monitor.frame_id
     _item_description.description
@@ -10361,8 +10502,8 @@ save__diffrn_scan_frame_monitor.frame_id
     _item.category_id             diffrn_scan_frame_monitor
     _item.mandatory_code          implicit
     _item_type.code               code
-     save_
 
+save_
 
 save__diffrn_scan_frame_monitor.integration_time
     _item_description.description
@@ -10379,8 +10520,8 @@ save__diffrn_scan_frame_monitor.integration_time
     _item_range.maximum
     _item_range.minimum
                             .   0.0
-     save_
 
+save_
 
 save__diffrn_scan_frame_monitor.monitor_value
     _item_description.description
@@ -10406,8 +10547,8 @@ save__diffrn_scan_frame_monitor.monitor_value
     _item_range.maximum
     _item_range.minimum
                             .   0.0
-     save_
 
+save_
 
 save__diffrn_scan_frame_monitor.scan_id
     _item_description.description
@@ -10418,8 +10559,8 @@ save__diffrn_scan_frame_monitor.scan_id
     _item.category_id             diffrn_scan_frame_monitor
     _item.mandatory_code          yes
     _item_type.code               code
-     save_
 
+save_
 
 save__diffrn_scan_frame_monitor.variant
     _item_description.description
@@ -10437,8 +10578,426 @@ save__diffrn_scan_frame_monitor.variant
     _item.mandatory_code          implicit
     _item_default.value           .
     _item_type.code               code
-     save_
 
+save_
+
+#################
+# DIFFRN_SOURCE #
+#################
+
+save_diffrn_source
+   _category.description
+;              Data items in the DIFFRN_SOURCE category record details of
+               the source of radiation used in the diffraction experiment.
+
+               This is a stub category for use of DIFFRN_SOURCE which is
+               specified in the mmCIF_PDBx dictionary
+;
+
+   _category.id              diffrn_source
+   _category.mandatory_code  no
+
+   _category_key.name  "_diffrn_source.diffrn_id"
+
+   loop_
+   _category_group.id
+     inclusive_group
+     diffrn_group
+
+
+save_
+
+save__diffrn_source.diffrn_id
+   _item_description.description
+;              This data item is a pointer to _diffrn.id in the DIFFRN
+               category.
+;
+
+   _item.name                 '_diffrn_source.diffrn_id'
+   _item.mandatory_code         yes
+
+   _item_aliases.alias_name   '_diffrn_source.diffrn_id'
+   _item_aliases.dictionary     mmcif_pdbx.dic
+   _item_aliases.version        5.384
+
+
+save_
+
+save__diffrn_source.source
+   _item_description.description  "              The general class of the radiation source."
+
+   _item.name            "_diffrn_source.source"
+   _item.category_id     diffrn_source
+   _item.mandatory_code  no
+  
+   _pdbx_item.name            "_diffrn_source.source"
+   _pdbx_item.mandatory_code  yes
+
+   loop_
+   _item_aliases.alias_name
+   _item_aliases.dictionary
+   _item_aliases.version
+     "_diffrn_source.source"     mmcif_pdbx.dic  5.384
+     "_diffrn_radiation_source"  cifdic.c91      1.0
+     "_diffrn_source"            cif_core.dic    2.0
+ 
+   _item_type.code  text
+ 
+   loop_
+   _item_examples.case
+     "sealed X-ray tube"  
+     "nuclear reactor"
+     "spallation source"  
+     "electron microscope"  
+     "rotating-anode X-ray tube"
+     synchrotron
+ 
+   _pdbx_item_description.name         "_diffrn_source.source"
+   _pdbx_item_description.description  "If an X-ray generator was used, please specify the name and model of the generator. If your particular model is not found, use other."
+
+   loop_
+   _pdbx_item_enumeration.name
+   _pdbx_item_enumeration.value
+   _pdbx_item_enumeration.detail
+     "_diffrn_source.source"  "ELECTRON MICROSCOPE"  electron
+     "_diffrn_source.source"  "FREE ELECTRON LASER"  x-ray
+     "_diffrn_source.source"  "LIQUID ANODE"         x-ray
+     "_diffrn_source.source"  "NUCLEAR REACTOR"      neutron
+     "_diffrn_source.source"  "ROTATING ANODE"       x-ray
+     "_diffrn_source.source"  "SEALED TUBE"          x-ray
+     "_diffrn_source.source"  "SPALLATION SOURCE"    neutron
+     "_diffrn_source.source"  SYNCHROTRON            x-ray
+
+
+save_
+
+save__diffrn_source.type
+   _item_description.description  "              The make, model or name of the source of radiation."
+
+   _item.name            "_diffrn_source.type"
+   _item.category_id     diffrn_source
+   _item.mandatory_code  no
+
+   loop_
+   _item_aliases.alias_name
+   _item_aliases.dictionary
+   _item_aliases.version
+     "_diffrn_source.type"       mmcif_pdbx.dic  5.384
+     "_diffrn_source_type"       cif_core.dic    2.0.1
+
+   _item_type.code  text
+ 
+   loop_
+   _item_examples.case
+     "NSLS beamline X8C"
+     "Rigaku RU200"
+ 
+   _pdbx_item.name            "_diffrn_source.type"
+   _pdbx_item.mandatory_code  yes
+
+   loop_
+   _pdbx_item_enumeration.name
+   _pdbx_item_enumeration.value
+   _pdbx_item_enumeration.detail
+     "_diffrn_source.type"  "AichiSR BEAMLINE BL2S1"                         SYNCHROTRON
+     "_diffrn_source.type"  "Agilent SuperNova"                              "SEALED TUBE"
+     "_diffrn_source.type"  "ALBA BEAMLINE XALOC"                            SYNCHROTRON
+     "_diffrn_source.type"  "ALS BEAMLINE 2.0.1"                             SYNCHROTRON
+     "_diffrn_source.type"  "ALS BEAMLINE 4.2.2"                             SYNCHROTRON
+     "_diffrn_source.type"  "ALS BEAMLINE 5.0.1"                             SYNCHROTRON
+     "_diffrn_source.type"  "ALS BEAMLINE 5.0.2"                             SYNCHROTRON
+     "_diffrn_source.type"  "ALS BEAMLINE 5.0.3"                             SYNCHROTRON
+     "_diffrn_source.type"  "ALS BEAMLINE 8.2.1"                             SYNCHROTRON
+     "_diffrn_source.type"  "ALS BEAMLINE 8.2.2"                             SYNCHROTRON
+     "_diffrn_source.type"  "ALS BEAMLINE 8.3.1"                             SYNCHROTRON
+     "_diffrn_source.type"  "ALS BEAMLINE 12.3.1"                            SYNCHROTRON
+     "_diffrn_source.type"  "APS BEAMLINE 5ID-B"                             SYNCHROTRON
+     "_diffrn_source.type"  "APS BEAMLINE 1-BM-C"                            SYNCHROTRON
+     "_diffrn_source.type"  "APS BEAMLINE 8-BM"                              SYNCHROTRON
+     "_diffrn_source.type"  "APS BEAMLINE 14-BM-C"                           SYNCHROTRON
+     "_diffrn_source.type"  "APS BEAMLINE 14-BM-D"                           SYNCHROTRON
+     "_diffrn_source.type"  "APS BEAMLINE 14-ID-B"                           SYNCHROTRON
+     "_diffrn_source.type"  "APS BEAMLINE 17-BM"                             SYNCHROTRON
+     "_diffrn_source.type"  "APS BEAMLINE 17-ID"                             SYNCHROTRON
+     "_diffrn_source.type"  "APS BEAMLINE 18-ID"                             SYNCHROTRON
+     "_diffrn_source.type"  "APS BEAMLINE 19-BM"                             SYNCHROTRON
+     "_diffrn_source.type"  "APS BEAMLINE 19-ID"                             SYNCHROTRON
+     "_diffrn_source.type"  "APS BEAMLINE 21-ID-D"                           SYNCHROTRON
+     "_diffrn_source.type"  "APS BEAMLINE 21-ID-E"                           SYNCHROTRON
+     "_diffrn_source.type"  "APS BEAMLINE 21-ID-F"                           SYNCHROTRON
+     "_diffrn_source.type"  "APS BEAMLINE 21-ID-G"                           SYNCHROTRON
+     "_diffrn_source.type"  "APS BEAMLINE 22-BM"                             SYNCHROTRON
+     "_diffrn_source.type"  "APS BEAMLINE 22-ID"                             SYNCHROTRON
+     "_diffrn_source.type"  "APS BEAMLINE 23-BM-B"                           SYNCHROTRON
+     "_diffrn_source.type"  "APS BEAMLINE 23-ID-B"                           SYNCHROTRON
+     "_diffrn_source.type"  "APS BEAMLINE 23-ID-D"                           SYNCHROTRON
+     "_diffrn_source.type"  "APS BEAMLINE 24-ID-C"                           SYNCHROTRON
+     "_diffrn_source.type"  "APS BEAMLINE 24-ID-E"                           SYNCHROTRON
+     "_diffrn_source.type"  "APS BEAMLINE 31-ID"                             SYNCHROTRON
+     "_diffrn_source.type"  "APS BEAMLINE 32-ID"                             SYNCHROTRON
+     "_diffrn_source.type"  "APS BEAMLINE 34-ID"                             SYNCHROTRON
+     "_diffrn_source.type"  "AUSTRALIAN SYNCHROTRON BEAMLINE MX1"            SYNCHROTRON
+     "_diffrn_source.type"  "AUSTRALIAN SYNCHROTRON BEAMLINE MX2"            SYNCHROTRON
+     "_diffrn_source.type"  "BESSY BEAMLINE 14.1"                            SYNCHROTRON
+     "_diffrn_source.type"  "BESSY BEAMLINE 14.2"                            SYNCHROTRON
+     "_diffrn_source.type"  "BESSY BEAMLINE 14.3"                            SYNCHROTRON
+     "_diffrn_source.type"  "BRUKER AXS MICROSTAR"                           "ROTATING ANODE"
+     "_diffrn_source.type"  "BRUKER AXS MICROSTAR-H"                         "ROTATING ANODE"
+     "_diffrn_source.type"  "BRUKER D8 QUEST"                                "SEALED TUBE"
+     "_diffrn_source.type"  "BRUKER IMUS DIAMOND MICROFOCUS"                 "SEALED TUBE"
+     "_diffrn_source.type"  "BRUKER IMUS MICROFOCUS"                         "SEALED TUBE"
+     "_diffrn_source.type"  "BRUKER IMUS 3.0 MICROFOCUS"                     "SEALED TUBE"
+     "_diffrn_source.type"  "BRUKER METALJET"                                "LIQUID ANODE"
+     "_diffrn_source.type"  "BRUKER TURBO X-RAY SOURCE"                      "ROTATING ANODE"
+     "_diffrn_source.type"  "BRUKER X8 PROTEUM"                              "ROTATING ANODE"
+     "_diffrn_source.type"  "BSRF BEAMLINE 1W2B"                             SYNCHROTRON
+     "_diffrn_source.type"  "BSRF BEAMLINE 3W1A"                             SYNCHROTRON
+     "_diffrn_source.type"  "CAMD BEAMLINE GCPCC"                            SYNCHROTRON
+     "_diffrn_source.type"  "CHESS BEAMLINE 7B2"                             SYNCHROTRON
+     "_diffrn_source.type"  "CHESS BEAMLINE A1"                              SYNCHROTRON
+     "_diffrn_source.type"  "CHESS BEAMLINE F1"                              SYNCHROTRON
+     "_diffrn_source.type"  "CHESS BEAMLINE F2"                              SYNCHROTRON
+     "_diffrn_source.type"  "CHESS BEAMLINE F3"                              SYNCHROTRON
+     "_diffrn_source.type"  "CHESS BEAMLINE G3"                              SYNCHROTRON
+     "_diffrn_source.type"  "CLSI BEAMLINE 08B1-1"                           SYNCHROTRON
+     "_diffrn_source.type"  "CLSI BEAMLINE 08ID-1"                           SYNCHROTRON
+     "_diffrn_source.type"  "Cu FINE FOCUS"                                  "ROTATING ANODE"
+     "_diffrn_source.type"  "DIAMOND BEAMLINE I02"                           SYNCHROTRON
+     "_diffrn_source.type"  "DIAMOND BEAMLINE I03"                           SYNCHROTRON
+     "_diffrn_source.type"  "DIAMOND BEAMLINE I04"                           SYNCHROTRON
+     "_diffrn_source.type"  "DIAMOND BEAMLINE I04-1"                         SYNCHROTRON
+     "_diffrn_source.type"  "DIAMOND BEAMLINE I23"                           SYNCHROTRON
+     "_diffrn_source.type"  "DIAMOND BEAMLINE I24"                           SYNCHROTRON
+     "_diffrn_source.type"  "DIAMOND BEAMLINE VMXi"                          SYNCHROTRON
+     "_diffrn_source.type"  "DIAMOND BEAMLINE VMXm"                          SYNCHROTRON
+     "_diffrn_source.type"  "ELETTRA BEAMLINE 5.2R"                          SYNCHROTRON
+     "_diffrn_source.type"  "ELETTRA BEAMLINE 11.2C"                         SYNCHROTRON
+     "_diffrn_source.type"  "ELLIOTT GX-3"                                   "ROTATING ANODE"
+     "_diffrn_source.type"  "ELLIOTT GX-13"                                  "ROTATING ANODE"
+     "_diffrn_source.type"  "ELLIOTT GX-18"                                  "ROTATING ANODE"
+     "_diffrn_source.type"  "ELLIOTT GX-20"                                  "ROTATING ANODE"
+     "_diffrn_source.type"  "ELLIOTT GX-21"                                  "ROTATING ANODE"
+     "_diffrn_source.type"  "ELLIOTT GX-6"                                   "ROTATING ANODE"
+     "_diffrn_source.type"  "EMBL/DESY, HAMBURG BEAMLINE BW7A"               SYNCHROTRON
+     "_diffrn_source.type"  "EMBL/DESY, HAMBURG BEAMLINE BW7B"               SYNCHROTRON
+     "_diffrn_source.type"  "EMBL/DESY, HAMBURG BEAMLINE X11"                SYNCHROTRON
+     "_diffrn_source.type"  "EMBL/DESY, HAMBURG BEAMLINE X12"                SYNCHROTRON
+     "_diffrn_source.type"  "EMBL/DESY, HAMBURG BEAMLINE X13"                SYNCHROTRON
+     "_diffrn_source.type"  "EMBL/DESY, HAMBURG BEAMLINE X31"                SYNCHROTRON
+     "_diffrn_source.type"  "ENRAF-NONIUS FR571"                             "ROTATING ANODE"
+     "_diffrn_source.type"  "ENRAF-NONIUS FR590"                             "ROTATING ANODE"
+     "_diffrn_source.type"  "ENRAF-NONIUS FR591"                             "ROTATING ANODE"
+     "_diffrn_source.type"  "ESRF BEAMLINE BM02"                             SYNCHROTRON
+     "_diffrn_source.type"  "ESRF BEAMLINE BM07"                             SYNCHROTRON
+     "_diffrn_source.type"  "ESRF BEAMLINE BM1A"                             SYNCHROTRON
+     "_diffrn_source.type"  "ESRF BEAMLINE BM14"                             SYNCHROTRON
+     "_diffrn_source.type"  "ESRF BEAMLINE BM16"                             SYNCHROTRON
+     "_diffrn_source.type"  "ESRF BEAMLINE BM26"                             SYNCHROTRON
+     "_diffrn_source.type"  "ESRF BEAMLINE BM30A"                            SYNCHROTRON
+     "_diffrn_source.type"  "ESRF BEAMLINE ID09"                             SYNCHROTRON
+     "_diffrn_source.type"  "ESRF BEAMLINE ID13"                             SYNCHROTRON
+     "_diffrn_source.type"  "ESRF BEAMLINE ID14-1"                           SYNCHROTRON
+     "_diffrn_source.type"  "ESRF BEAMLINE ID14-2"                           SYNCHROTRON
+     "_diffrn_source.type"  "ESRF BEAMLINE ID14-3"                           SYNCHROTRON
+     "_diffrn_source.type"  "ESRF BEAMLINE ID14-4"                           SYNCHROTRON
+     "_diffrn_source.type"  "ESRF BEAMLINE ID2"                              SYNCHROTRON
+     "_diffrn_source.type"  "ESRF BEAMLINE ID22"                             SYNCHROTRON
+     "_diffrn_source.type"  "ESRF BEAMLINE ID23-1"                           SYNCHROTRON
+     "_diffrn_source.type"  "ESRF BEAMLINE ID23-2"                           SYNCHROTRON
+     "_diffrn_source.type"  "ESRF BEAMLINE ID27"                             SYNCHROTRON
+     "_diffrn_source.type"  "ESRF BEAMLINE ID29"                             SYNCHROTRON
+     "_diffrn_source.type"  "ESRF BEAMLINE ID30B"                            SYNCHROTRON
+     "_diffrn_source.type"  "ESRF BEAMLINE MASSIF-1"                         SYNCHROTRON
+     "_diffrn_source.type"  "ESRF BEAMLINE MASSIF-2"                         SYNCHROTRON
+     "_diffrn_source.type"  "ESRF BEAMLINE MASSIF-3"                         SYNCHROTRON
+     "_diffrn_source.type"  "EUROPEAN XFEL BEAMLINE FXE"                     "FREE ELECTRON LASER"
+     "_diffrn_source.type"  "EUROPEAN XFEL BEAMLINE SPB/SFX"                 "FREE ELECTRON LASER"
+     "_diffrn_source.type"  "Excillum MetalJet D2 70 kV"                     "LIQUID ANODE"
+     "_diffrn_source.type"  "Excillum MetalJet D2+ 70 kV"                    "LIQUID ANODE"
+     "_diffrn_source.type"  "Excillum MetalJet D2+ 160 kV"                   "LIQUID ANODE"
+     "_diffrn_source.type"  "FRM II BEAMLINE ANTARES"                        "NUCLEAR REACTOR"
+     "_diffrn_source.type"  "FRM II BEAMLINE BIODIFF"                        "NUCLEAR REACTOR"
+     "_diffrn_source.type"  "KURCHATOV SNC BEAMLINE K4.4"                    SYNCHROTRON
+     "_diffrn_source.type"  "ILL BEAMLINE D11"                               "NUCLEAR REACTOR"
+     "_diffrn_source.type"  "ILL BEAMLINE D16"                               "NUCLEAR REACTOR"
+     "_diffrn_source.type"  "ILL BEAMLINE D19"                               "NUCLEAR REACTOR"
+     "_diffrn_source.type"  "ILL BEAMLINE D22"                               "NUCLEAR REACTOR"
+     "_diffrn_source.type"  "ILL BEAMLINE D33"                               "NUCLEAR REACTOR"
+     "_diffrn_source.type"  "ILL BEAMLINE H142"                              "NUCLEAR REACTOR"
+     "_diffrn_source.type"  "ILL BEAMLINE LADI"                              "NUCLEAR REACTOR"
+     "_diffrn_source.type"  "ILL BEAMLINE LADI III"                          "NUCLEAR REACTOR"
+     "_diffrn_source.type"  "ISIS BEAMLINE LOQ"                              "SPALLATION SOURCE"
+     "_diffrn_source.type"  "J-PARC MLF BEAMLINE BL-03"                      "SPALLATION SOURCE"
+     "_diffrn_source.type"  "JRR-3M BEAMLINE 1G-A"                           "NUCLEAR REACTOR"
+     "_diffrn_source.type"  "JRR-3M BEAMLINE 1G-B"                           "NUCLEAR REACTOR"
+     "_diffrn_source.type"  "JRR-3M BEAMLINE 1G-C"                           "NUCLEAR REACTOR"
+     "_diffrn_source.type"  "LaB6 thermoionic"                               .
+     "_diffrn_source.type"  "LANSCE BEAMLINE BL03"                           "NUCLEAR REACTOR"
+     "_diffrn_source.type"  "LANSCE BEAMLINE PCS"                            "NUCLEAR REACTOR"
+     "_diffrn_source.type"  "LNLS BEAMLINE D02A-SAXS2"                       SYNCHROTRON
+     "_diffrn_source.type"  "LNLS BEAMLINE D03B-MX1"                         SYNCHROTRON
+     "_diffrn_source.type"  "LNLS BEAMLINE D11A-SAXS1"                       SYNCHROTRON
+     "_diffrn_source.type"  "LNLS BEAMLINE W01B-MX2"                         SYNCHROTRON
+     "_diffrn_source.type"  "LNLS SIRIUS BEAMLINE MANACA"                    SYNCHROTRON
+     "_diffrn_source.type"  "LURE BEAMLINE DW21B"                            SYNCHROTRON
+     "_diffrn_source.type"  "LURE BEAMLINE DW32"                             SYNCHROTRON
+     "_diffrn_source.type"  "LURE BEAMLINE D41A"                             SYNCHROTRON
+     "_diffrn_source.type"  MACSCIENCE                                       .
+     "_diffrn_source.type"  "MACSCIENCE M06X"                                "ROTATING ANODE"
+     "_diffrn_source.type"  "MACSCIENCE M12X"                                "ROTATING ANODE"
+     "_diffrn_source.type"  "MACSCIENCE M18X"                                "ROTATING ANODE"
+     "_diffrn_source.type"  "MALVERN PANALYTICAL EMPYREAN TUBE"              "SEALED TUBE"
+     "_diffrn_source.type"  "MAX II BEAMLINE I711"                           SYNCHROTRON
+     "_diffrn_source.type"  "MAX II BEAMLINE I911-2"                         SYNCHROTRON
+     "_diffrn_source.type"  "MAX II BEAMLINE I911-3"                         SYNCHROTRON
+     "_diffrn_source.type"  "MAX II BEAMLINE I911-5"                         SYNCHROTRON
+     "_diffrn_source.type"  "MAX IV BEAMLINE BioMAX"                         SYNCHROTRON
+     "_diffrn_source.type"  "MPG/DESY, HAMBURG BEAMLINE BW6"                 SYNCHROTRON
+     "_diffrn_source.type"  "NFPSS BEAMLINE BL17B"                           SYNCHROTRON
+     "_diffrn_source.type"  "NFPSS BEAMLINE BL18U"                           SYNCHROTRON
+     "_diffrn_source.type"  "NFPSS BEAMLINE BL19U1"                          SYNCHROTRON
+     "_diffrn_source.type"  "NSLS BEAMLINE X1A"                              SYNCHROTRON
+     "_diffrn_source.type"  "NSLS BEAMLINE X3A"                              SYNCHROTRON
+     "_diffrn_source.type"  "NSLS BEAMLINE X4A"                              SYNCHROTRON
+     "_diffrn_source.type"  "NSLS BEAMLINE X4C"                              SYNCHROTRON
+     "_diffrn_source.type"  "NSLS BEAMLINE X6A"                              SYNCHROTRON
+     "_diffrn_source.type"  "NSLS BEAMLINE X7B"                              SYNCHROTRON
+     "_diffrn_source.type"  "NSLS BEAMLINE X8C"                              SYNCHROTRON
+     "_diffrn_source.type"  "NSLS BEAMLINE X9A"                              SYNCHROTRON
+     "_diffrn_source.type"  "NSLS BEAMLINE X9B"                              SYNCHROTRON
+     "_diffrn_source.type"  "NSLS BEAMLINE X12B"                             SYNCHROTRON
+     "_diffrn_source.type"  "NSLS BEAMLINE X12C"                             SYNCHROTRON
+     "_diffrn_source.type"  "NSLS BEAMLINE X17B1"                            SYNCHROTRON
+     "_diffrn_source.type"  "NSLS BEAMLINE X25"                              SYNCHROTRON
+     "_diffrn_source.type"  "NSLS BEAMLINE X26C"                             SYNCHROTRON
+     "_diffrn_source.type"  "NSLS BEAMLINE X29A"                             SYNCHROTRON
+     "_diffrn_source.type"  "NSLS-II BEAMLINE 17-ID-1"                       SYNCHROTRON
+     "_diffrn_source.type"  "NSLS-II BEAMLINE 17-ID-2"                       SYNCHROTRON
+     "_diffrn_source.type"  "NSLS-II BEAMLINE 19-ID"                         SYNCHROTRON
+     "_diffrn_source.type"  "NSRL BEAMLINE U7B"                              SYNCHROTRON
+     "_diffrn_source.type"  "NSRRC BEAMLINE BL13B1"                          SYNCHROTRON
+     "_diffrn_source.type"  "NSRRC BEAMLINE BL13C1"                          SYNCHROTRON
+     "_diffrn_source.type"  "NSRRC BEAMLINE BL15A1"                          SYNCHROTRON
+     "_diffrn_source.type"  "NSRRC BEAMLINE BL17A"                           SYNCHROTRON
+     "_diffrn_source.type"  "NSRRC BEAMLINE BL17B2"                          SYNCHROTRON
+     "_diffrn_source.type"  "NSRRC BEAMLINE TPS 05A"                         SYNCHROTRON
+     "_diffrn_source.type"  "NSRRC BEAMLINE TPS 07A"                         SYNCHROTRON
+     "_diffrn_source.type"  "ORNL High Flux Isotope Reactor BEAMLINE CG4D"   "NUCLEAR REACTOR"
+     "_diffrn_source.type"  "ORNL Spallation Neutron Source BEAMLINE MANDI"  "SPALLATION SOURCE"
+     "_diffrn_source.type"  "OXFORD DIFFRACTION ENHANCE ULTRA"               "SEALED TUBE"
+     "_diffrn_source.type"  "OXFORD DIFFRACTION GEMINI"                      "SEALED TUBE"
+     "_diffrn_source.type"  "OXFORD DIFFRACTION NOVA"                        "SEALED TUBE"
+     "_diffrn_source.type"  "OXFORD DIFFRACTION SUPERNOVA"                   "SEALED TUBE"
+     "_diffrn_source.type"  "PAL/PLS BEAMLINE 4A"                            SYNCHROTRON
+     "_diffrn_source.type"  "PAL/PLS BEAMLINE 5C (4A)"                       SYNCHROTRON
+     "_diffrn_source.type"  "PAL/PLS BEAMLINE 6B"                            SYNCHROTRON
+     "_diffrn_source.type"  "PAL/PLS BEAMLINE 6C1"                           SYNCHROTRON
+     "_diffrn_source.type"  "PAL/PLS BEAMLINE 6D"                            SYNCHROTRON
+     "_diffrn_source.type"  "PAL/PLS BEAMLINE 7A (6B, 6C1)"                  SYNCHROTRON
+     "_diffrn_source.type"  "PAL/PLS BEAMLINE 11C"                           SYNCHROTRON
+     "_diffrn_source.type"  "PAL-XFEL BEAMLINE CSI"                          "FREE ELECTRON LASER"
+     "_diffrn_source.type"  "PAL-XFEL BEAMLINE FXS"                          "FREE ELECTRON LASER"
+     "_diffrn_source.type"  "PAL-XFEL BEAMLINE NCI"                          "FREE ELECTRON LASER"
+     "_diffrn_source.type"  "PETRA II, DESY BEAMLINE PETRA1"                 SYNCHROTRON
+     "_diffrn_source.type"  "PETRA III, EMBL c/o DESY BEAMLINE P13 (MX1)"    SYNCHROTRON
+     "_diffrn_source.type"  "PETRA III, EMBL c/o DESY BEAMLINE P14 (MX2)"    SYNCHROTRON
+     "_diffrn_source.type"  "PETRA III, DESY BEAMLINE P11"                   SYNCHROTRON
+     "_diffrn_source.type"  "PHOTON FACTORY BEAMLINE AR-NE3A"                SYNCHROTRON
+     "_diffrn_source.type"  "PHOTON FACTORY BEAMLINE AR-NW12A"               SYNCHROTRON
+     "_diffrn_source.type"  "PHOTON FACTORY BEAMLINE AR-NW14A"               SYNCHROTRON
+     "_diffrn_source.type"  "PHOTON FACTORY BEAMLINE BL-1A"                  SYNCHROTRON
+     "_diffrn_source.type"  "PHOTON FACTORY BEAMLINE BL-5A"                  SYNCHROTRON
+     "_diffrn_source.type"  "PHOTON FACTORY BEAMLINE BL-6A"                  SYNCHROTRON
+     "_diffrn_source.type"  "PHOTON FACTORY BEAMLINE BL-6B"                  SYNCHROTRON
+     "_diffrn_source.type"  "PHOTON FACTORY BEAMLINE BL-17A"                 SYNCHROTRON
+     "_diffrn_source.type"  "PHOTON FACTORY BEAMLINE BL-18B"                 SYNCHROTRON
+     "_diffrn_source.type"  RIGAKU                                           "ROTATING ANODE"
+     "_diffrn_source.type"  "RIGAKU FR-D"                                    "ROTATING ANODE"
+     "_diffrn_source.type"  "RIGAKU FR-E"                                    "ROTATING ANODE"
+     "_diffrn_source.type"  "RIGAKU FR-E+"                                   "ROTATING ANODE"
+     "_diffrn_source.type"  "RIGAKU FR-E DW"                                 "ROTATING ANODE"
+     "_diffrn_source.type"  "RIGAKU FR-E SUPERBRIGHT"                        "ROTATING ANODE"
+     "_diffrn_source.type"  "RIGAKU FR-E+ DW"                                "ROTATING ANODE"
+     "_diffrn_source.type"  "RIGAKU FR-E+ SUPERBRIGHT"                       "ROTATING ANODE"
+     "_diffrn_source.type"  "RIGAKU FR-X"                                    "ROTATING ANODE"
+     "_diffrn_source.type"  "RIGAKU MICROMAX-002"                            "ROTATING ANODE"
+     "_diffrn_source.type"  "RIGAKU MICROMAX-002+"                           "ROTATING ANODE"
+     "_diffrn_source.type"  "RIGAKU MICROMAX-003"                            "SEALED TUBE"
+     "_diffrn_source.type"  "RIGAKU MICROMAX-007"                            "ROTATING ANODE"
+     "_diffrn_source.type"  "RIGAKU MICROMAX-007 HF"                         "ROTATING ANODE"
+     "_diffrn_source.type"  "RIGAKU PhotonJet-R"                             "ROTATING ANODE"
+     "_diffrn_source.type"  "RIGAKU PhotonJet-S"                             "SEALED TUBE"
+     "_diffrn_source.type"  "RIGAKU R-AXIS"                                  "ROTATING ANODE"
+     "_diffrn_source.type"  "RIGAKU R-AXIS II"                               "ROTATING ANODE"
+     "_diffrn_source.type"  "RIGAKU R-AXIS IV"                               "ROTATING ANODE"
+     "_diffrn_source.type"  "RIGAKU RU200"                                   "ROTATING ANODE"
+     "_diffrn_source.type"  "RIGAKU RU300"                                   "ROTATING ANODE"
+     "_diffrn_source.type"  "RIGAKU RUH2R"                                   "ROTATING ANODE"
+     "_diffrn_source.type"  "RIGAKU RUH3R"                                   "ROTATING ANODE"
+     "_diffrn_source.type"  "RIGAKU ULTRAX 18"                               "ROTATING ANODE"
+     "_diffrn_source.type"  "RRCAT INDUS-2 BEAMLINE PX-BL21"                 SYNCHROTRON
+     "_diffrn_source.type"  "SACLA BEAMLINE BL2"                             "FREE ELECTRON LASER"
+     "_diffrn_source.type"  "SACLA BEAMLINE BL3"                             "FREE ELECTRON LASER"
+     "_diffrn_source.type"  "SAGA-LS BEAMLINE BL07"                          SYNCHROTRON
+     "_diffrn_source.type"  SIEMENS                                          "ROTATING ANODE"
+     "_diffrn_source.type"  "SLAC LCLS BEAMLINE AMO"                         "FREE ELECTRON LASER"
+     "_diffrn_source.type"  "SLAC LCLS BEAMLINE CXI"                         "FREE ELECTRON LASER"
+     "_diffrn_source.type"  "SLAC LCLS BEAMLINE MFX"                         "FREE ELECTRON LASER"
+     "_diffrn_source.type"  "SLAC LCLS BEAMLINE XPP"                         "FREE ELECTRON LASER"
+     "_diffrn_source.type"  "SLS BEAMLINE X06DA"                             SYNCHROTRON
+     "_diffrn_source.type"  "SLS BEAMLINE X06SA"                             SYNCHROTRON
+     "_diffrn_source.type"  "SLS BEAMLINE X10SA"                             SYNCHROTRON
+     "_diffrn_source.type"  "SOLEIL BEAMLINE PROXIMA 1"                      SYNCHROTRON
+     "_diffrn_source.type"  "SOLEIL BEAMLINE PROXIMA 2"                      SYNCHROTRON
+     "_diffrn_source.type"  "SOLEIL BEAMLINE CRISTAL"                        SYNCHROTRON
+     "_diffrn_source.type"  "SPRING-8 BEAMLINE BL12B2"                       SYNCHROTRON
+     "_diffrn_source.type"  "SPRING-8 BEAMLINE BL24XU"                       SYNCHROTRON
+     "_diffrn_source.type"  "SPRING-8 BEAMLINE BL26B1"                       SYNCHROTRON
+     "_diffrn_source.type"  "SPRING-8 BEAMLINE BL26B2"                       SYNCHROTRON
+     "_diffrn_source.type"  "SPRING-8 BEAMLINE BL32B2"                       SYNCHROTRON
+     "_diffrn_source.type"  "SPRING-8 BEAMLINE BL32XU"                       SYNCHROTRON
+     "_diffrn_source.type"  "SPRING-8 BEAMLINE BL38B1"                       SYNCHROTRON
+     "_diffrn_source.type"  "SPRING-8 BEAMLINE BL40B2"                       SYNCHROTRON
+     "_diffrn_source.type"  "SPRING-8 BEAMLINE BL41XU"                       SYNCHROTRON
+     "_diffrn_source.type"  "SPRING-8 BEAMLINE BL44B2"                       SYNCHROTRON
+     "_diffrn_source.type"  "SPRING-8 BEAMLINE BL44XU"                       SYNCHROTRON
+     "_diffrn_source.type"  "SPRING-8 BEAMLINE BL45PX"                       SYNCHROTRON
+     "_diffrn_source.type"  "SPRING-8 BEAMLINE BL45XU"                       SYNCHROTRON
+     "_diffrn_source.type"  "SLRI BEAMLINE BL7.2W"                           SYNCHROTRON
+     "_diffrn_source.type"  "SRS BEAMLINE PX7.2"                             SYNCHROTRON
+     "_diffrn_source.type"  "SRS BEAMLINE PX9.5"                             SYNCHROTRON
+     "_diffrn_source.type"  "SRS BEAMLINE PX9.6"                             SYNCHROTRON
+     "_diffrn_source.type"  "SRS BEAMLINE PX10.1"                            SYNCHROTRON
+     "_diffrn_source.type"  "SRS BEAMLINE PX14.1"                            SYNCHROTRON
+     "_diffrn_source.type"  "SRS BEAMLINE PX14.2"                            SYNCHROTRON
+     "_diffrn_source.type"  "SSRF BEAMLINE BL02U1"                           SYNCHROTRON
+     "_diffrn_source.type"  "SSRF BEAMLINE BL03HB"                           SYNCHROTRON
+     "_diffrn_source.type"  "SSRF BEAMLINE BL10U2"                           SYNCHROTRON
+     "_diffrn_source.type"  "SSRF BEAMLINE BL17U"                            SYNCHROTRON
+     "_diffrn_source.type"  "SSRF BEAMLINE BL17U1"                           SYNCHROTRON
+     "_diffrn_source.type"  "SSRF BEAMLINE BL17UM"                           SYNCHROTRON
+     "_diffrn_source.type"  "SSRF BEAMLINE BL17B1"                           SYNCHROTRON
+     "_diffrn_source.type"  "SSRF BEAMLINE BL18U1"                           SYNCHROTRON
+     "_diffrn_source.type"  "SSRF BEAMLINE BL19U1"                           SYNCHROTRON
+     "_diffrn_source.type"  "SSRL BEAMLINE BL1-5"                            SYNCHROTRON
+     "_diffrn_source.type"  "SSRL BEAMLINE BL4-2"                            SYNCHROTRON
+     "_diffrn_source.type"  "SSRL BEAMLINE BL7-1"                            SYNCHROTRON
+     "_diffrn_source.type"  "SSRL BEAMLINE BL9-1"                            SYNCHROTRON
+     "_diffrn_source.type"  "SSRL BEAMLINE BL9-2"                            SYNCHROTRON
+     "_diffrn_source.type"  "SSRL BEAMLINE BL9-3"                            SYNCHROTRON
+     "_diffrn_source.type"  "SSRL BEAMLINE BL11-1"                           SYNCHROTRON
+     "_diffrn_source.type"  "SSRL BEAMLINE BL11-3"                           SYNCHROTRON
+     "_diffrn_source.type"  "SSRL BEAMLINE BL12-1"                           SYNCHROTRON
+     "_diffrn_source.type"  "SSRL BEAMLINE BL12-2"                           SYNCHROTRON
+     "_diffrn_source.type"  "SSRL BEAMLINE BL14-1"                           SYNCHROTRON
+     "_diffrn_source.type"  "SwissFEL ARAMIS BEAMLINE ESA"                   "FREE ELECTRON LASER"
+     "_diffrn_source.type"  "SwissFEL ARAMIS BEAMLINE ESB"                   "FREE ELECTRON LASER"
+     "_diffrn_source.type"  "SwissFEL ARAMIS BEAMLINE ESC"                   "FREE ELECTRON LASER"
+     "_diffrn_source.type"  "Xenocs GeniX 3D Cu HF"                          "SEALED TUBE"
+     "_diffrn_source.type"  OTHER                                            .
+
+
+save_
 
 #######
 # MAP #
@@ -10476,8 +11035,7 @@ save_MAP
                 and a calculated density map
 ;
 ;
-
-        loop_
+         loop_
         _map.id
         _map.details
 
@@ -10494,8 +11052,8 @@ save_MAP
 ;
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-     save_
 
+save_
 
 save__map.details
     _item_description.description
@@ -10530,8 +11088,8 @@ save__map.details
     ;
 ;
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-     save_
 
+save_
 
 save__map.diffrn_id
     _item_description.description
@@ -10542,8 +11100,8 @@ save__map.diffrn_id
     _item.category_id             map
     _item.mandatory_code          implicit
     _item_type.code               code
-     save_
 
+save_
 
 save__map.entry_id
     _item_description.description
@@ -10554,8 +11112,8 @@ save__map.entry_id
     _item.category_id             map
     _item.mandatory_code          implicit
     _item_type.code               code
-     save_
 
+save_
 
 save__map.id
     _item_description.description
@@ -10573,8 +11131,8 @@ save__map.id
     _item_linked.child_name
     _item_linked.parent_name
            '_map_segment.id'        '_map.id'
-     save_
 
+save_
 
 save__map.variant
     _item_description.description
@@ -10592,8 +11150,8 @@ save__map.variant
     _item.mandatory_code          implicit
     _item_default.value           .
     _item_type.code               code
-     save_
 
+save_
 
 ###############
 # MAP_SEGMENT #
@@ -10652,8 +11210,8 @@ save_MAP_SEGMENT
 ;
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-     save_
 
+save_
 
 save__map_segment.array_id
     _item_description.description
@@ -10667,8 +11225,8 @@ save__map_segment.array_id
     _item.category_id             map_segment
     _item.mandatory_code          implicit
     _item_type.code               code
-     save_
 
+save_
 
 save__map_segment.array_section_id
     _item_description.description
@@ -10679,8 +11237,8 @@ save__map_segment.array_section_id
     _item.category_id             map_segment
     _item.mandatory_code          yes
     _item_type.code               code
-     save_
 
+save_
 
 save__map_segment.binary_id
     _item_description.description
@@ -10695,8 +11253,8 @@ save__map_segment.binary_id
     _item.category_id             map_segment
     _item.mandatory_code          implicit
     _item_type.code               int
-     save_
 
+save_
 
 save__map_segment.mask_array_id
     _item_description.description
@@ -10721,8 +11279,8 @@ save__map_segment.mask_array_id
     _item.category_id             map_segment
     _item.mandatory_code          implicit
     _item_type.code               code
-     save_
 
+save_
 
 save__map_segment.mask_binary_id
     _item_description.description
@@ -10737,8 +11295,8 @@ save__map_segment.mask_binary_id
     _item.category_id             map_segment
     _item.mandatory_code          implicit
     _item_type.code               int
-     save_
 
+save_
 
 save__map_segment.mask_array_section_id
     _item_description.description
@@ -10749,8 +11307,8 @@ save__map_segment.mask_array_section_id
     _item.category_id             map_segment
     _item.mandatory_code          yes
     _item_type.code               code
-    save_
 
+save_
 
 save__map_segment.id
     _item_description.description
@@ -10765,8 +11323,8 @@ save__map_segment.id
            map_segment
            yes
     _item_type.code               code
-     save_
 
+save_
 
 save__map_segment.map_id
     _item_description.description
@@ -10777,8 +11335,8 @@ save__map_segment.map_id
     _item.category_id             map_segment
     _item.mandatory_code          yes
     _item_type.code               code
-     save_
 
+save_
 
 save__map_segment.details
     _item_description.description
@@ -10797,8 +11355,8 @@ save__map_segment.details
 ;               
                 . . .
 ;
-     save_
 
+save_
 
 save__map_segment.variant
     _item_description.description
@@ -10816,8 +11374,8 @@ save__map_segment.variant
     _item.mandatory_code          implicit
     _item_default.value           .
     _item_type.code               code
-     save_
 
+save_
 
 ###########
 # VARIANT #
@@ -10927,7 +11485,8 @@ save_VARIANT
 ;
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-     save_
+
+save_
 
 save__variant.details
     _item_description.description
@@ -10940,7 +11499,8 @@ save__variant.details
     _item_examples.case
 ;                                indexed cell and refined beam centre
 ;
-     save_
+
+save_
 
 save__variant.diffrn_id
     _item_description.description
@@ -10951,7 +11511,8 @@ save__variant.diffrn_id
     _item.category_id             variant
     _item.mandatory_code          implicit
     _item_type.code               code
-     save_
+
+save_
 
 save__variant.entry_id
     _item_description.description
@@ -10962,8 +11523,8 @@ save__variant.entry_id
     _item.category_id             variant
     _item.mandatory_code          yes
     _item_type.code               code
-     save_
 
+save_
 
 save__variant.role
     _item_description.description
@@ -11001,8 +11562,8 @@ save__variant.role
 ;    A value of 'unsuccessful trial' indicates data that should not be used
      for further calculation.
 ;
-     save_
 
+save_
 
 save__variant.timestamp
     _item_description.description
@@ -11015,8 +11576,8 @@ save__variant.timestamp
     _item.category_id          variant
     _item.mandatory_code       no
     _item_type.code            yyyy-mm-dd
-     save_
 
+save_
 
 save__variant.variant
     _item_description.description
@@ -11100,8 +11661,8 @@ save__variant.variant
              '_map.variant'                        '_variant.variant'
              '_map_segment.variant'                '_variant.variant'
 
-     save_
 
+save_
 
 save__variant.variant_of
     _item_description.description
@@ -11117,10 +11678,8 @@ save__variant.variant_of
     _item.category_id             variant
     _item.mandatory_code          implicit
     _item_type.code               code
-     save_
 
-
-
+save_
 
 ########################   DEPRECATED DATA ITEMS ########################
 
@@ -11135,8 +11694,8 @@ save__diffrn_detector_axis.id
     _item.category_id             diffrn_detector_axis
     _item.mandatory_code          no
     _item_type.code               code
-     save_
 
+save_
 
 save__diffrn_detector_element.center[1]
     _item_description.description
@@ -11169,8 +11728,8 @@ save__diffrn_detector_element.center[1]
     _item_related.function_code   replacedby
     _item_units.code              millimetres
 
-     save_
 
+save_
 
 save__diffrn_detector_element.center[2]
     _item_description.description
@@ -11203,9 +11762,8 @@ save__diffrn_detector_element.center[2]
     _item_related.function_code   replacedby
     _item_units.code              millimetres
 
-     save_
 
-
+save_
 
 save__diffrn_measurement_axis.id
     _item_description.description
@@ -11220,8 +11778,8 @@ save__diffrn_measurement_axis.id
     _item_related.related_name   '_diffrn_measurement_axis.measurement_id'
     _item_related.function_code   replacedby
     _item_type.code               code
-     save_
 
+save_
 
 save__diffrn_scan_frame_monitor.value
     _item_description.description
@@ -11244,8 +11802,8 @@ save__diffrn_scan_frame_monitor.value
     _item_range.maximum
     _item_range.minimum
                             .   0.0
-     save_
 
+save_
 
 #########################   DEPRECATED CATEGORY #########################
 #####################
@@ -11296,8 +11854,8 @@ save_DIFFRN_FRAME_DATA
        # EXAMPLE REMOVED #
 ;
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-     save_
 
+save_
 
 save__diffrn_frame_data.array_id
     _item_description.description
@@ -11312,8 +11870,8 @@ save__diffrn_frame_data.array_id
     _item_related.related_name   '_diffrn_data_frame.array_id'
     _item_related.function_code   replacedby
     _item_type.code               code
-     save_
 
+save_
 
 save__diffrn_frame_data.binary_id
     _item_description.description
@@ -11328,8 +11886,8 @@ save__diffrn_frame_data.binary_id
     _item_related.related_name   '_diffrn_data_frame.binary_id'
     _item_related.function_code   replacedby
     _item_type.code               int
-     save_
 
+save_
 
 save__diffrn_frame_data.detector_element_id
     _item_description.description
@@ -11344,8 +11902,8 @@ save__diffrn_frame_data.detector_element_id
     _item_related.related_name   '_diffrn_data_frame.detector_element_id'
     _item_related.function_code   replacedby
     _item_type.code               code
-     save_
 
+save_
 
 save__diffrn_frame_data.id
     _item_description.description
@@ -11362,8 +11920,8 @@ save__diffrn_frame_data.id
     _item_related.related_name   '_diffrn_data_frame.id'
     _item_related.function_code   replacedby
     _item_type.code               code
-     save_
 
+save_
 
 save__diffrn_frame_data.details
     _item_description.description
@@ -11378,8 +11936,8 @@ save__diffrn_frame_data.details
     _item_related.related_name   '_diffrn_data_frame.details'
     _item_related.function_code   replacedby
     _item_type.code               text
-     save_
 
+save_
 
 ################ END DEPRECATED SECTION ###########
 
@@ -11746,17 +12304,30 @@ save__diffrn_frame_data.details
     _dictionary_history.update
     _dictionary_history.revision
 
-    1.8.8    2023-11-25
+    1.8.8    2024-01-20
 
 ;   Additional flux tags and change to ddl2 version being the master
-    instead of the html version being the master
+    instead of the html version being the master.  Make changes to
+    support conversions to DDLm and back to DDL2.  Mark tags aliased
+    from mmCIF_PDBx dictionary.
 
+    + Change from use of _item.type_code to _item_type.code
+    + Fix extraneous single quote after _array_data_external_data.file_compression
+    + Change 'photons per second' to photons_per_second in units
+    + Add micrometres, photons, photons_per_second, and 
+      photons_per_seconf_per_micrometre_squared to units
+    + Add stub DIFFRN category
+    + Add _diffrn.id
     + Add _diffrn_radiation.beam_flux_density
     + Add _diffrn_radiation.beam_flux_density_integrated
     + Add _diffrn_radiation.beam_flux_integrated
     + Add _diffrn_radiation.beam_flux_integration_time
     + Add _diffrn_radiation.beam_incident_flux
     + Add _diffrn_radiation.beam_incident_flux_integrated
+    + Add stub DIFFRN_SOURCE category
+    + Add _diffrn_source.diffrn_id
+    + Add _diffrn_source.source
+    + Add _diffrn_source.type
 ;
 
     1.8.7    2023-01-26
