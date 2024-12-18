@@ -5,7 +5,7 @@ data_CIF_IMG.DIC
     _dictionary.title             cif_img.dic
     _dictionary.class             Instance
     _dictionary.version           1.8.8
-    _dictionary.date              2024-01-20
+    _dictionary.date              2024-12-18
     _dictionary.ddl_conformance   3.14.0
     _dictionary.namespace         ddlm
     _description.text
@@ -1413,6 +1413,7 @@ save_array_data_external_data.archive_format
          ZIP                      'A ZIP archive'
          TGZ                      'A Gzipped tar archive'
          TBZ                      'A Bzip2 tar archive'
+         TAR                      'An uncompressed tar archive'
          .                        'No compressed archive is present'
 
     _enumeration.default          .
@@ -1459,6 +1460,7 @@ save_array_data_external_data.file_compression
       _enumeration_set.detail
          GZ                       'A Gzipped file'
          BZ2                      'File compressed with Bzip2'
+         XZ                       'File compressed with XZ Utils'
          .                        'Individual file compression not used'
 
     _enumeration.default          .
