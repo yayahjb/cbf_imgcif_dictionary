@@ -1516,9 +1516,6 @@ save__array_data_external_data.format
     _array_data_external_data.path, and
     _array_data_external_data.frame directly.
 
-    Proprietary formats developed by manufacturers are included in the list of possible
-    formats in order to allow legacy deposits to be referenced and should not be used
-    for new data deposits.
 ;
 
     _item.name                 '_array_data_external_data.format'
