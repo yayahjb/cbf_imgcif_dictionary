@@ -4,7 +4,7 @@ data_CIF_IMG.DIC
 
     _dictionary.title             cif_img.dic
     _dictionary.class             Instance
-    _dictionary.version           1.8.8.2
+    _dictionary.version           1.8.9
     _dictionary.date              2025-06-10
     _dictionary.ddl_conformance   3.14.0
     _dictionary.namespace         ddlm
@@ -15,7 +15,7 @@ data_CIF_IMG.DIC
 #             and Crystallographic Binary File Dictionary (CBF)              #
 #            Extending the Macromolecular CIF Dictionary (mmCIF)             #
 #                                                                            #
-#                             Version 1.8.8.2                                #
+#                              Version 1.8.9                                 #
 #                              of 2025-06-10                                 #
 #++/--                                                                       #
 #+/-                                                                         #
@@ -187,6 +187,7 @@ data_CIF_IMG.DIC
 #                  _diffrn_data_frame.center_slow
 #                  _diffrn_data_frame.center_units
 #                  _diffrn_data_frame.detector_element_id
+#                  _diffrn_data_frame.diffrn_id
 #                  _diffrn_data_frame.id
 #                  _diffrn_data_frame.details
 #                  _diffrn_data_frame.variant
@@ -210,6 +211,7 @@ data_CIF_IMG.DIC
 #
 #                  _diffrn_detector_axis.axis_id
 #                  _diffrn_detector_axis.detector_id
+#                  _diffrn_detector_axis.diffrn_id
 #                  _diffrn_detector_axis.variant
 #
 
@@ -217,6 +219,7 @@ data_CIF_IMG.DIC
 #
 #                  _diffrn_detector_element.id
 #                  _diffrn_detector_element.detector_id
+#                  _diffrn_detector_element.diffrn_id
 #                  _diffrn_detector_element.reference_center_fast
 #                  _diffrn_detector_element.reference_center_slow
 #                  _diffrn_detector_element.reference_center_units
@@ -297,6 +300,7 @@ data_CIF_IMG.DIC
 #                  _diffrn_scan.date_end
 #                  _diffrn_scan.date_end_estimated
 #                  _diffrn_scan.date_start
+#                  _diffrn_scan.diffrn_id
 #                  _diffrn_scan.integration_time
 #                  _diffrn_scan.frame_id_start
 #                  _diffrn_scan.frame_id_end
@@ -317,6 +321,7 @@ data_CIF_IMG.DIC
 #                  _diffrn_scan_axis.displacement_range
 #                  _diffrn_scan_axis.displacement_increment
 #                  _diffrn_scan_axis.displacement_rstrt_incr
+#                  _diffrn_scan_axis.displacement_diffrn_id
 #                  _diffrn_scan_axis.reference_angle
 #                  _diffrn_scan_axis.reference_displacement
 #                  _diffrn_scan_axis.scan_id
@@ -326,6 +331,7 @@ data_CIF_IMG.DIC
 #        category  DIFFRN_SCAN_COLLECTION 
 #
 #                  _diffrn_scan_collection.details
+#                  _diffrn_scan_collection.diffrn_id
 #                  _diffrn_scan_collection.scan_id
 #                  _diffrn_scan_collection.type
 #                  _diffrn_scan_collection.translation_width
@@ -335,6 +341,7 @@ data_CIF_IMG.DIC
 #        category  DIFFRN_SCAN_FRAME 
 #
 #                  _diffrn_scan_frame.date
+#                  _diffrn_scan_frame.diffrn_id
 #                  _diffrn_scan_frame.frame_id
 #                  _diffrn_scan_frame.frame_number
 #                  _diffrn_scan_frame.integration_time
@@ -361,6 +368,7 @@ data_CIF_IMG.DIC
 #                  _diffrn_scan_frame_axis.displacement
 #                  _diffrn_scan_frame_axis.displacement_increment
 #                  _diffrn_scan_frame_axis.displacement_rstrt_incr
+#                  _diffrn_scan_frame_axis.diffrn_id
 #                  _diffrn_scan_frame_axis.reference_angle
 #                  _diffrn_scan_frame_axis.reference_displacement
 #                  _diffrn_scan_frame_axis.frame_id
@@ -371,6 +379,7 @@ data_CIF_IMG.DIC
 #
 #                  _diffrn_scan_frame_monitor.id
 #                  _diffrn_scan_frame_monitor.detector_id
+#                  _diffrn_scan_frame_monitor.diffrn_id
 #                  _diffrn_scan_frame_monitor.frame_id
 #                  _diffrn_scan_frame_monitor.integration_time
 #                  _diffrn_scan_frame_monitor.monitor_value
@@ -6635,6 +6644,25 @@ save_diffrn_data_frame.detector_element_id
 
 save_
 
+save_diffrn_data_frame.diffrn_id
+
+    _definition.id                '_diffrn_data_frame.diffrn_id'
+    _description.text
+;             This item is a pointer to '_diffrn.id'
+              in the DIFFRN category.
+;
+    _name.category_id             diffrn_data_frame
+    _name.object_id               diffrn_id
+    _name.linked_item_id          '_diffrn.id'
+    _name.ddl2_mandatory          implicit
+    _type.purpose                 Describe
+    _type.source                  Assigned
+    _type.container               Single
+    _type.contents                Text
+    _type.ddl2_code               code
+
+save_
+
 save_diffrn_data_frame.id
 
     _definition.id                '_diffrn_data_frame.id'
@@ -7099,6 +7127,25 @@ save_diffrn_detector_axis.detector_id
 
 save_
 
+save_diffrn_detector_axis.diffrn_id
+
+    _definition.id                '_diffrn_detector_axis.diffrn_id'
+    _description.text
+;             This data item is a pointer to '_diffrn.id' in
+              the DIFFRN category.
+;
+    _name.category_id             diffrn_detector_axis
+    _name.object_id               diffrn_id
+    _name.linked_item_id          '_diffrn.id'
+    _name.ddl2_mandatory          implicit
+    _type.purpose                 Describe
+    _type.source                  Assigned
+    _type.container               Single
+    _type.contents                Text
+    _type.ddl2_code               code
+
+save_
+
 save_diffrn_detector_axis.id
 
     _definition.id                '_diffrn_detector_axis.id'
@@ -7327,6 +7374,25 @@ save_diffrn_detector_element.detector_id
     _name.object_id               detector_id
     _name.ddl2_mandatory          yes
     _type.purpose                 Key
+    _type.source                  Assigned
+    _type.container               Single
+    _type.contents                Text
+    _type.ddl2_code               code
+
+save_
+
+save_diffrn_detector_element.diffrn_id
+
+    _definition.id                '_diffrn_detector_element.diffrn_id'
+    _description.text
+;             This item is a pointer to _diffrn.id
+              in the DIFFRN category.
+;
+    _name.category_id             diffrn_detector_element
+    _name.object_id               diffrn_id
+    _name.linked_item_id          '_diffrn.id'
+    _name.ddl2_mandatory          implicit
+    _type.purpose                 Describe
     _type.source                  Assigned
     _type.container               Single
     _type.contents                Text
@@ -8145,6 +8211,16 @@ save_diffrn_measurement_axis.axis_id
     _type.container               Single
     _type.contents                Text
     _type.ddl2_code               code
+
+save_
+
+save_diffrn_measurement_axis.diffrn_id
+
+    _definition.id                '_diffrn_measurement_axis.diffrn_id'
+    _name.category_id             diffrn_measurement_axis
+    _name.object_id               diffrn_id
+    _name.linked_item_id          '_diffrn.id'
+    _name.ddl2_mandatory          implicit
 
 save_
 
@@ -10384,6 +10460,16 @@ save_diffrn_scan.date_start
 
 save_
 
+save_diffrn_scan.diffrn_id
+
+    _definition.id                '_diffrn_scan.diffrn_id'
+    _name.category_id             diffrn_scan
+    _name.object_id               diffrn_id
+    _name.linked_item_id          '_diffrn.id'
+    _name.ddl2_mandatory          implicit
+
+save_
+
 save_diffrn_scan.frame_id_end
 
     _definition.id                '_diffrn_scan.frame_id_end'
@@ -10786,6 +10872,24 @@ save_diffrn_scan_axis.axis_id
 
 save_
 
+save_diffrn_scan_axis.diffrn_id
+
+    _definition.id                '_diffrn_scan_axis.diffrn_id'
+    _description.text
+;             This data item is a pointer to '_diffrn.id' in
+              the DIFFRN category.
+;
+    _name.category_id             diffrn_scan_axis
+    _name.object_id               diffrn_id
+    _name.ddl2_mandatory          yes
+    _type.purpose                 Describe
+    _type.source                  Assigned
+    _type.container               Single
+    _type.contents                Text
+    _type.ddl2_code               code
+
+save_
+
 save_diffrn_scan_axis.displacement_increment
 
     _definition.id                '_diffrn_scan_axis.displacement_increment'
@@ -11084,6 +11188,25 @@ save_diffrn_scan_collection.details
 
 save_
 
+save_diffrn_scan_collection.diffrn_id
+
+    _definition.id                '_diffrn_scan_collection.diffrn_id'
+    _description.text
+;             This data item is a pointer to '_diffrn.id' in
+              the DIFFRN category.
+;
+    _name.category_id             diffrn_scan_collection
+    _name.object_id               diffrn_id
+    _name.linked_item_id          '_diffrn.id'
+    _name.ddl2_mandatory          implicit
+    _type.purpose                 Describe
+    _type.source                  Assigned
+    _type.container               Single
+    _type.contents                Text
+    _type.ddl2_code               code
+
+save_
+
 save_diffrn_scan_collection.scan_id
 
     _definition.id                '_diffrn_scan_collection.scan_id'
@@ -11251,6 +11374,25 @@ save_diffrn_scan_frame.date
     _type.container               Single
     _type.contents                Text
     _type.ddl2_code               yyyy-mm-dd
+
+save_
+
+save_diffrn_scan_frame.diffrn_id
+
+    _definition.id                '_diffrn_scan_frame.diffrn_id'
+    _description.text
+;             This data item is a pointer to '_diffrn.id' in
+              the DIFFRN category.
+;
+    _name.category_id             diffrn_scan_frame
+    _name.object_id               diffrn_id
+    _name.linked_item_id          '_diffrn.id'
+    _name.ddl2_mandatory          implicit
+    _type.purpose                 Describe
+    _type.source                  Assigned
+    _type.container               Single
+    _type.contents                Text
+    _type.ddl2_code               code
 
 save_
 
@@ -11927,6 +12069,25 @@ save_diffrn_scan_frame_axis.axis_id
 
 save_
 
+save_diffrn_scan_frame_axis.diffrn_id
+
+    _definition.id                '_diffrn_scan_frame_axis.diffrn_id'
+    _description.text
+;             This data item is a pointer to '_diffrn.id' in
+              the DIFFRN category.
+;
+    _name.category_id             diffrn_scan_frame_axis
+    _name.object_id               diffrn_id
+    _name.linked_item_id          '_diffrn.id'
+    _name.ddl2_mandatory          implicit
+    _type.purpose                 Describe
+    _type.source                  Assigned
+    _type.container               Single
+    _type.contents                Text
+    _type.ddl2_code               code
+
+save_
+
 save_diffrn_scan_frame_axis.displacement
 
     _definition.id                '_diffrn_scan_frame_axis.displacement'
@@ -12323,6 +12484,25 @@ save_diffrn_scan_frame_monitor.detector_id
     _name.linked_item_id          '_diffrn_detector.id'
     _name.ddl2_mandatory          yes
     _type.purpose                 Key
+    _type.source                  Assigned
+    _type.container               Single
+    _type.contents                Text
+    _type.ddl2_code               code
+
+save_
+
+save_diffrn_scan_frame_monitor.diffrn_id
+
+    _definition.id                '_diffrn_scan_frame_monitor.diffrn_id'
+    _description.text
+;             This data item is a pointer to '_diffrn.id' in
+              the DIFFRN category.
+;
+    _name.category_id             diffrn_scan_frame_monitor
+    _name.object_id               diffrn_id
+    _name.linked_item_id          '_diffrn.id'
+    _name.ddl2_mandatory          implicit
+    _type.purpose                 Describe
     _type.source                  Assigned
     _type.container               Single
     _type.contents                Text
@@ -12751,7 +12931,7 @@ save_map.id
     _definition.id                '_map.id'
     _description.text
 ;             The value of _map.id must uniquely identify
-              each map for the given diffrn.id or entry.id.
+              each map for the given '_diffrn.id' or entry.id.
 ;
     _name.category_id             map
     _name.object_id               id
@@ -13353,6 +13533,20 @@ save_
       _dictionary_audit.version
       _dictionary_audit.date
       _dictionary_audit.revision
+         1.8.9                    2025-06-10
+;
+       Addition of missing diffrn.id pointers
+
+        + Add _diffrn_detector_element.diffrn_id
+        + Add _diffrn_measurement_axis.diffrn_id
+        + Add _diffrn_scan.diffrn_id
+        + Add _diffrn_scan_axis.diffrn_id
+        + Add _diffrn_scan_collection.diffrn_id
+        + Add _diffrn_scan_frame.diffrn_id
+        + Add _diffrn_scan_frame_axis.diffrn_id
+        + Add _diffrn_scan_frame_axis.diffrn_id
+        + Add _diffrn_scan_frame_monitor.diffrn_id
+;
          1.8.8.2                  2025-06-10
 ;
        Pick up minor type corrections from 1.8.9 dcitionary
