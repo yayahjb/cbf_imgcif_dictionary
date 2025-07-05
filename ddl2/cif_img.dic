@@ -9,8 +9,8 @@ data_cif_img.dic
 #             and Crystallographic Binary File Dictionary (CBF)              #
 #            Extending the Macromolecular CIF Dictionary (mmCIF)             #
 #                                                                            #
-#                              Version 1.8.9                                 #
-#                              of 2025-06-10                                 #
+#                             Version 1.8.9.2                                #
+#                              of 2025-07-05                                 #
 #++/--                                                                       #
 #+/-                                                                         #
 #    ###################################################################     #
@@ -1417,7 +1417,7 @@ save__array_data_external_data.archive_format
 
     _item.name                 '_array_data_external_data.archive_format'
     _item.category_id            array_data_external_data
-    _item.type_code              code
+    _item_type.code              code
     _item_default.value          .
 
     loop_
@@ -1456,7 +1456,7 @@ save__array_data_external_data.file_compression
     _item.name                 '_array_data_external_data.file_compression'
     _item.category_id            array_data_external_data
     _item.mandatory_code         no
-    _item.type_code              code
+    _item_type.code              code
     _item_default.value          .
 
     loop_
@@ -1530,7 +1530,7 @@ save__array_data_external_data.format
     _item.name                 '_array_data_external_data.format'
     _item.category_id            array_data_external_data
     _item.mandatory_code         no
-    _item.type_code              code
+    _item_type.code              code
 
     loop_
     _item_enumeration.value
@@ -5383,6 +5383,7 @@ save__axis.depends_on
     _item.name                      '_axis.depends_on'
     _item.category_id                 axis
     _item.mandatory_code              no
+    _item_type.code                   code
      save_
 save__axis.equipment
     _item_description.description
@@ -10494,6 +10495,7 @@ save__diffrn_source.diffrn_id
 
    _item.name                 '_diffrn_source.diffrn_id'
    _item.mandatory_code         yes
+   _item_type.code              code
 
    _item_aliases.alias_name   '_diffrn_source.diffrn_id'
    _item_aliases.dictionary     mmcif_pdbx.dic
@@ -12095,6 +12097,15 @@ save__diffrn_frame_data.details
     _dictionary_history.version
     _dictionary_history.update
     _dictionary_history.revision
+
+    1.8.9.2 2025-07-05
+
+;  Copy-edit pass by A. Viatkus
+
+   + Add _item_type.code code to _diffrn_source.diffrn_id
+   + Add _item_type.code code to _axis.depends_on
+   + Fix stray uses of _item.type_code to be _item_type.code
+;
 
     1.8.9 2025-06-10
   

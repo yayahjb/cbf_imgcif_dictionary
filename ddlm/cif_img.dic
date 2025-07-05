@@ -5,7 +5,7 @@ data_CIF_IMG.DIC
     _dictionary.title             cif_img.dic
     _dictionary.class             Instance
     _dictionary.version           1.8.9
-    _dictionary.date              2025-06-10
+    _dictionary.date              2025-07-05
     _dictionary.ddl_conformance   3.14.0
     _dictionary.namespace         ddlm
     _description.text
@@ -15,8 +15,8 @@ data_CIF_IMG.DIC
 #             and Crystallographic Binary File Dictionary (CBF)              #
 #            Extending the Macromolecular CIF Dictionary (mmCIF)             #
 #                                                                            #
-#                              Version 1.8.9                                 #
-#                              of 2025-06-10                                 #
+#                             Version 1.8.9.2                                #
+#                              of 2025-07-05                                 #
 #++/--                                                                       #
 #+/-                                                                         #
 #    ###################################################################     #
@@ -1444,6 +1444,11 @@ save_array_data_external_data.archive_format
 ;
     _name.category_id             array_data_external_data
     _name.object_id               archive_format
+    _type.purpose                 State
+    _type.source                  Assigned
+    _type.container               Single
+    _type.contents                Text
+    _type.ddl2_code               code
 
     loop_
       _enumeration_set.state
@@ -1486,6 +1491,11 @@ save_array_data_external_data.file_compression
     _name.category_id             array_data_external_data
     _name.object_id               file_compression
     _name.ddl2_mandatory          no
+    _type.purpose                 State
+    _type.source                  Assigned
+    _type.container               Single
+    _type.contents                Text
+    _type.ddl2_code               code
 
     loop_
       _enumeration_set.state
@@ -1530,6 +1540,11 @@ save_array_data_external_data.format
     _name.category_id             array_data_external_data
     _name.object_id               format
     _name.ddl2_mandatory          no
+    _type.purpose                 State
+    _type.source                  Assigned
+    _type.container               Single
+    _type.contents                Text
+    _type.ddl2_code               code
 
     loop_
       _enumeration_set.state
@@ -5856,6 +5871,11 @@ save_axis.depends_on
     _name.object_id               depends_on
     _name.linked_item_id          '_axis.id'
     _name.ddl2_mandatory          no
+    _type.purpose                 Describe
+    _type.source                  Assigned
+    _type.container               Single
+    _type.contents                Text
+    _type.ddl2_code               code
 
 save_
 
@@ -12725,6 +12745,11 @@ save_diffrn_source.diffrn_id
     _name.object_id               diffrn_id
     _name.linked_item_id          '_diffrn.id'
     _name.ddl2_mandatory          yes
+    _type.purpose                 Key
+    _type.source                  Assigned
+    _type.container               Single
+    _type.contents                Text
+    _type.ddl2_code               code
 
 save_
 
@@ -13533,6 +13558,14 @@ save_
       _dictionary_audit.version
       _dictionary_audit.date
       _dictionary_audit.revision
+         1.8.9.2                  2025-07-05
+;
+       Copy-edit pass by A. Viatkus
+
+        + Add _item_type.code code to _diffrn_source.diffrn_id
+        + Add _item_type.code code to _axis.depends_on
+        + Fix stray uses of _item.type_code to be _item_type.code
+;
          1.8.9                    2025-06-10
 ;
        Addition of missing diffrn.id pointers
