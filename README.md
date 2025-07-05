@@ -1,19 +1,21 @@
 # cbf_imgcif_dictionary
 Repository for CBF/imgCIF dictionary
 
-This is a draft of the new home repository for the 
-CBF/imgcif dictionary which will have a master ddl2
-version, a derived ddlm version, one or more html
-versions for online use, and various documentation
-files for use in ITVG and other places.
+This is a repository for the CBF/imgcif dictionary
+which has a master ddl2 version, a derived ddlm 
+version, one or more html versions for online use, 
+and various documentation files for use in ITVG and other places.
 
-At the time of writing (27 Nov 2023), this is a work in 
+A new structure for management of the repositories for
+the cif_img dictionaries under the DIALs unbrella is under
+development.
+
+At the time of writing (4 July 2025) this is a work in 
 progress from the dictionary being maintained as an html
-master within the doc directory in the yayahjb/cbflib
-github repository, with a ddlm version being created
-in COMCIFS/imgCIF using James Hester's ddl_to_ddl.jl
-tool,and prelinary ddl2/cif_img.dic and a preliminary
-ddlm/cif)img 1.8.8 version sitting in this repository
-for testing.
+master within the doc directory in the dials/cbflib
+github repository.  DDL2, DDLm and html versions are
+available both in the dials/cbflib github repository
+and in this repository.  The duplication will be resolved
+in the course of the reorganization.
 
 
